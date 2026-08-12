@@ -1,0 +1,154 @@
+/* =============================================================================
+   PAC — TOKENS DE DISEÑO
+   -----------------------------------------------------------------------------
+   Todo el color, tipografía y espaciado del sitio sale de este archivo.
+   Si quieres cambiar algo en TODO el sitio de un jalón, cámbialo aquí.
+   No pongas colores "a mano" en styles.css — usa estas variables.
+   ============================================================================= */
+
+:root {
+
+  /* ---------------------------------------------------------------------------
+     1. COLORES DE MARCA — leídos del logo
+     --------------------------------------------------------------------------- */
+  --pac-verde-logo: #97C45E;  /* hoja + onda del logo. Rellenos y acentos. */
+  --pac-gris-logo:  #63625D;  /* gris del wordmark "PAC" */
+
+  /* ---------------------------------------------------------------------------
+     2. ESCALA DE VERDE — mismo tono de la hoja (hue 86°), distintas luminosidades
+
+     IMPORTANTE: el verde del logo (--verde-300) es demasiado claro para poner
+     texto blanco encima — da 2:1 de contraste y es ilegible. Por eso existe la
+     escala: el logo usa el 300, los botones usan el 700.
+     --------------------------------------------------------------------------- */
+  --verde-50:  #F4F8EC;   /* fondo muy suave */
+  --verde-100: #E7F1D8;   /* fondo de tarjetas / badges */
+  --verde-200: #CFE3B2;   /* bordes suaves */
+  --verde-300: #97C45E;   /* = el verde del logo. Íconos, hoja, onda. */
+  --verde-600: #5A8722;   /* 4.3:1 — solo texto grande o íconos */
+  --verde-700: #46681A;   /* 6.4:1 — ✅ botones y texto verde sobre blanco */
+  --verde-900: #2C4110;   /* hover de botones, fondos oscuros */
+
+  /* ---------------------------------------------------------------------------
+     3. ESCALA DE GRIS CÁLIDO — derivada del gris del wordmark
+     Es gris cálido, no neutro. Eso mantiene el sitio cerca del logo y evita
+     que se sienta frío/corporativo genérico.
+     --------------------------------------------------------------------------- */
+  --gris-50:  #F8F7F4;
+  --gris-100: #F0EFEA;
+  --gris-200: #DFDDD6;
+  --gris-300: #C6C4BB;
+  --gris-500: #8E8C84;
+  --gris-600: #63625D;    /* = gris del logo. 6.1:1 — texto secundario */
+  --gris-800: #3A3936;    /* 11.5:1 — texto principal */
+  --gris-900: #24231F;    /* footer, fondos oscuros */
+
+  --blanco: #FFFFFF;
+
+  /* WhatsApp: solo para el botón flotante, por reconocimiento inmediato.
+     No usar en ningún otro lado — pelea con la paleta. */
+  --whatsapp: #25D366;
+  --whatsapp-oscuro: #1DA851;
+
+  /* DATO PENDIENTE — ámbar, a propósito fuera de la paleta.
+     Sirve para que ningún placeholder se publique por accidente: si ves ámbar
+     en la página, es que falta un dato. Cuando ya no queden pendientes,
+     puedes borrar estas 3 variables y la clase .pendiente de styles.css. */
+  --pendiente-fondo: #FDF7E6;
+  --pendiente-borde: #D9B449;
+  --pendiente-texto: #7A5F17;
+
+  /* ---------------------------------------------------------------------------
+     4. ROLES SEMÁNTICOS
+     Usa SIEMPRE estos en styles.css, no los de arriba.
+     Así, si algún día cambia la marca, solo tocas esta sección.
+     --------------------------------------------------------------------------- */
+  --color-texto:         var(--gris-800);
+  --color-texto-suave:   var(--gris-600);
+  --color-texto-tenue:   var(--gris-500);
+  --color-fondo:         var(--blanco);
+  --color-fondo-alt:     var(--gris-50);
+  --color-fondo-verde:   var(--verde-50);
+  --color-fondo-oscuro:  var(--gris-900);
+  --color-borde:         var(--gris-200);
+  --color-borde-fuerte:  var(--gris-300);
+  --color-acento:        var(--verde-300);   /* la hoja, la onda, los íconos */
+  --color-accion:        var(--verde-700);   /* botones */
+  --color-accion-hover:  var(--verde-900);
+
+  /* ---------------------------------------------------------------------------
+     5. TIPOGRAFÍA
+     Por ahora usamos la fuente del sistema (rápida, cero descargas).
+     PENDIENTE: cambiar a Barlow auto-alojada en /assets/fonts/ cuando la subamos.
+     --------------------------------------------------------------------------- */
+  --fuente: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system,
+            "Helvetica Neue", Arial, sans-serif;
+
+  /* Escala fluida: crece sola entre móvil y escritorio, sin media queries. */
+  --texto-xs:   0.75rem;                              /* 12px — etiquetas */
+  --texto-sm:   0.875rem;                             /* 14px */
+  --texto-base: 1rem;                                 /* 16px — cuerpo */
+  --texto-lg:   clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
+  --texto-xl:   clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --texto-2xl:  clamp(1.5rem, 1.25rem + 1.2vw, 2rem);
+  --texto-3xl:  clamp(1.9rem, 1.4rem + 2.4vw, 3rem);
+  --texto-4xl:  clamp(2.2rem, 1.5rem + 3.4vw, 3.9rem);   /* el H1 del hero */
+
+  --peso-normal: 400;
+  --peso-medio:  600;
+  --peso-bold:   700;
+  --peso-black:  800;
+
+  --interlinea-apretada: 1.1;
+  --interlinea-titulo:   1.18;
+  --interlinea-cuerpo:   1.65;
+
+  /* ---------------------------------------------------------------------------
+     6. ESPACIADO — escala de 4px
+     --------------------------------------------------------------------------- */
+  --esp-1:  0.25rem;
+  --esp-2:  0.5rem;
+  --esp-3:  0.75rem;
+  --esp-4:  1rem;
+  --esp-5:  1.5rem;
+  --esp-6:  2rem;
+  --esp-7:  2.5rem;
+  --esp-8:  3rem;
+  --esp-9:  4rem;
+  --esp-10: 5rem;
+
+  /* Aire vertical de cada sección: menos en móvil, más en escritorio */
+  --esp-seccion: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+
+  /* ---------------------------------------------------------------------------
+     7. LAYOUT
+     --------------------------------------------------------------------------- */
+  --ancho-max:       1160px;   /* ancho del contenido */
+  --ancho-texto:     62ch;     /* ancho máximo de un párrafo, para legibilidad */
+  --padding-lateral: clamp(1.25rem, 4vw, 2.5rem);
+  --alto-header:     72px;
+
+  /* ---------------------------------------------------------------------------
+     8. BORDES, SOMBRAS Y TRANSICIONES
+     Sombras muy sutiles y cálidas (tienen tinte del gris del logo, no negro puro).
+     --------------------------------------------------------------------------- */
+  --radio-sm:  6px;
+  --radio-md:  10px;
+  --radio-lg:  16px;
+  --radio-full: 999px;
+
+  --sombra-sm: 0 1px 2px rgba(36, 35, 31, 0.05);
+  --sombra-md: 0 2px 4px rgba(36, 35, 31, 0.04), 0 6px 16px rgba(36, 35, 31, 0.06);
+  --sombra-lg: 0 4px 8px rgba(36, 35, 31, 0.05), 0 16px 36px rgba(36, 35, 31, 0.09);
+
+  --transicion: 160ms ease;
+}
+
+/* Respeta a quien tiene reducidas las animaciones en su sistema. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

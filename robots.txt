@@ -1,0 +1,6 @@
+# Permitimos que todos los buscadores indexen el sitio completo.
+User-agent: *
+Allow: /
+
+# PENDIENTE: cambiar EJEMPLO.mx por el dominio real.
+Sitemap: https://EJEMPLO.mx/sitemap.xml

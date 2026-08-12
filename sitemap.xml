@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- El sitio es una sola página, así que el sitemap tiene una sola entrada.
+     PENDIENTE: cambiar EJEMPLO.mx por el dominio real. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://EJEMPLO.mx/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

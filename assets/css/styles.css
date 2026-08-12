@@ -1,0 +1,873 @@
+/* =============================================================================
+   PAC — ESTILOS DEL SITIO
+   -----------------------------------------------------------------------------
+   Orden del archivo:
+     1. Base y reset          5. Hero
+     2. Utilidades de layout  6. Onda separadora
+     3. Botones               7. Servicios
+     4. Header                8. Normatividad (badges)
+                              9. Botón flotante de WhatsApp
+   Los colores salen de tokens.css. No escribas hex aquí.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   1. BASE Y RESET
+   --------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* Compensa el header fijo cuando se salta a una sección con #ancla */
+  scroll-padding-top: calc(var(--alto-header) + var(--esp-4));
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  font-size: var(--texto-base);
+  line-height: var(--interlinea-cuerpo);
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: var(--interlinea-titulo);
+  color: var(--color-texto);
+  text-wrap: balance;          /* evita títulos con una palabra huérfana */
+}
+p { margin: 0; }
+img, svg { max-width: 100%; display: block; }
+a { color: var(--color-accion); }
+
+/* Foco visible y consistente para navegación con teclado */
+:focus-visible {
+  outline: 3px solid var(--verde-600);
+  outline-offset: 3px;
+  border-radius: var(--radio-sm);
+}
+
+/* Texto solo para lectores de pantalla */
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   2. UTILIDADES DE LAYOUT
+   --------------------------------------------------------------------------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--padding-lateral);
+}
+
+.seccion { padding-block: var(--esp-seccion); }
+.seccion--alt { background: var(--color-fondo-alt); }
+
+/* Encabezado de sección: etiqueta pequeña + título */
+.seccion__etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--verde-700);
+  margin-bottom: var(--esp-3);
+}
+.seccion__etiqueta::before {
+  content: "";
+  width: 20px; height: 2px;
+  background: var(--color-acento);
+  border-radius: var(--radio-full);
+}
+
+.seccion__titulo { font-size: var(--texto-3xl); font-weight: var(--peso-black); letter-spacing: -0.02em; }
+
+.seccion__intro {
+  margin-top: var(--esp-4);
+  max-width: var(--ancho-texto);
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+}
+
+/* ---------------------------------------------------------------------------
+   3. BOTONES
+   --------------------------------------------------------------------------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  padding: 0.9rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--radio-md);
+  font: inherit;
+  font-weight: var(--peso-bold);
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transicion), border-color var(--transicion),
+              color var(--transicion), transform var(--transicion);
+}
+.boton:active { transform: translateY(1px); }
+.boton svg { flex-shrink: 0; }
+
+/* Botón principal — verde PAC (no verde WhatsApp: la marca manda) */
+.boton--principal {
+  background: var(--color-accion);
+  color: var(--blanco);
+  box-shadow: var(--sombra-md);
+}
+.boton--principal:hover { background: var(--color-accion-hover); }
+
+/* Botón secundario — para "llamar" y "cómo llegar" */
+.boton--secundario {
+  background: var(--blanco);
+  color: var(--color-texto);
+  border-color: var(--color-borde-fuerte);
+}
+.boton--secundario:hover { border-color: var(--verde-600); color: var(--verde-700); }
+
+/* Versión chica, para el header y las tarjetas */
+.boton--sm { padding: 0.6rem 1rem; font-size: var(--texto-sm); }
+
+.boton--grande { padding: 1.1rem 2rem; font-size: var(--texto-lg); }
+
+/* ---------------------------------------------------------------------------
+   4. HEADER FIJO
+   --------------------------------------------------------------------------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.header__interior {
+  height: var(--alto-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+}
+
+/* Bloque de logo: reproduce el orden del logo real — "PAC" + hoja, onda debajo,
+   y el nombre legal hasta abajo. */
+.logo { display: inline-flex; flex-direction: column; gap: 1px; text-decoration: none; }
+
+.logo__lockup { display: flex; align-items: center; gap: 3px; }
+.logo__nombre {
+  font-size: 1.55rem;
+  font-weight: var(--peso-black);
+  letter-spacing: -0.015em;
+  line-height: 1;
+  color: var(--pac-gris-logo);
+}
+.logo__hoja { width: 21px; height: 21px; margin-top: -2px; }
+
+/* La onda abarca todo el ancho del bloque, como en el logo original */
+.logo__onda { width: 100%; height: 6px; color: var(--color-acento); }
+
+.logo__bajada {
+  font-size: 0.55rem;
+  font-weight: var(--peso-medio);
+  letter-spacing: 0.045em;
+  line-height: 1.3;
+  color: var(--color-texto-tenue);
+  text-transform: uppercase;
+}
+/* En móvil el nombre legal no cabe — se oculta, la marca se entiende igual */
+@media (max-width: 560px) { .logo__bajada { display: none; } }
+
+.header__acciones { display: flex; align-items: center; gap: var(--esp-3); }
+
+/* El teléfono en el header solo aparece en escritorio (en móvil ya hay tel: abajo) */
+.header__tel {
+  display: none;
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto);
+  text-decoration: none;
+}
+.header__tel:hover { color: var(--verde-700); }
+@media (min-width: 860px) { .header__tel { display: inline-flex; align-items: center; gap: var(--esp-2); } }
+
+/* ---------------------------------------------------------------------------
+   5. HERO
+   Dos columnas en escritorio: mensaje a la izquierda, ficha de datos a la derecha.
+   En móvil se apilan y la ficha queda inmediatamente debajo del CTA.
+   --------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 100% 0%, var(--verde-50) 0%, transparent 55%),
+    linear-gradient(180deg, var(--gris-50) 0%, var(--blanco) 70%);
+  padding-block: clamp(2.5rem, 1rem + 7vw, 5rem) var(--esp-6);
+}
+
+.hero__grid {
+  display: grid;
+  gap: clamp(2.5rem, 1rem + 5vw, 4rem);
+  align-items: center;
+}
+@media (min-width: 940px) {
+  .hero__grid { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: 0.4rem 0.85rem 0.4rem 0.5rem;
+  background: var(--blanco);
+  border: 1px solid var(--verde-200);
+  border-radius: var(--radio-full);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--verde-700);
+  box-shadow: var(--sombra-sm);
+}
+.hero__eyebrow svg { width: 18px; height: 18px; }
+
+.hero__titulo {
+  margin-top: var(--esp-5);
+  font-size: var(--texto-4xl);
+  font-weight: var(--peso-black);
+  letter-spacing: -0.03em;
+  line-height: var(--interlinea-apretada);
+}
+/* La palabra clave del titular va en verde oscuro: ancla la mirada sin gritar */
+.hero__titulo em { font-style: normal; color: var(--verde-700); }
+
+.hero__sub {
+  margin-top: var(--esp-5);
+  max-width: 48ch;
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+}
+
+.hero__acciones {
+  margin-top: var(--esp-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+/* En móvil los botones ocupan todo el ancho: son el objetivo principal */
+@media (max-width: 480px) {
+  .hero__acciones .boton { width: 100%; }
+}
+
+.hero__nota {
+  margin-top: var(--esp-4);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-tenue);
+}
+
+/* --- Ficha de datos: el bloque más útil de la página ---
+   Se ve como una hoja técnica / dictamen, que es el lenguaje visual del negocio. */
+.ficha {
+  background: var(--blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-lg);
+  overflow: hidden;
+}
+
+.ficha__encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-4) var(--esp-5);
+  background: var(--gris-900);
+  color: var(--blanco);
+}
+.ficha__titulo {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ficha__sello {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.08em;
+  color: var(--verde-300);
+}
+
+.ficha__lista { margin: 0; padding: var(--esp-2) var(--esp-5) var(--esp-5); }
+
+.ficha__fila { padding-block: var(--esp-4); border-bottom: 1px solid var(--color-borde); }
+.ficha__fila:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.ficha__label {
+  margin: 0;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-texto-tenue);
+}
+.ficha__valor {
+  margin: var(--esp-1) 0 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  font-variant-numeric: tabular-nums;   /* números alineados, se ve técnico */
+  color: var(--color-texto);
+}
+.ficha__valor a { color: inherit; text-decoration: none; border-bottom: 2px solid var(--verde-200); }
+.ficha__valor a:hover { border-color: var(--verde-600); color: var(--verde-700); }
+
+/* Estado "dato pendiente" — visible pero sin parecer error */
+.ficha__valor--pendiente { color: var(--color-texto-tenue); font-weight: var(--peso-normal); font-style: italic; }
+
+/* ---------------------------------------------------------------------------
+   6. ONDA SEPARADORA
+   La onda del logo, reutilizada como separador entre secciones.
+   Es el recurso gráfico que cumple la regla de "nunca texto corrido sin corte".
+   --------------------------------------------------------------------------- */
+.onda { display: block; width: 100%; height: auto; color: var(--color-acento); }
+.onda--centrada { max-width: 220px; margin: var(--esp-6) auto 0; }
+
+/* ---------------------------------------------------------------------------
+   7. SERVICIOS
+   --------------------------------------------------------------------------- */
+.servicios__grid {
+  margin-top: var(--esp-7);
+  display: grid;
+  gap: var(--esp-5);
+}
+@media (min-width: 760px) { .servicios__grid { grid-template-columns: 1fr 1fr; } }
+
+.servicio {
+  display: flex;
+  flex-direction: column;
+  padding: var(--esp-6);
+  background: var(--blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  transition: border-color var(--transicion), box-shadow var(--transicion),
+              transform var(--transicion);
+}
+.servicio:hover {
+  border-color: var(--verde-200);
+  box-shadow: var(--sombra-lg);
+  transform: translateY(-3px);
+}
+
+.servicio__icono {
+  display: grid;
+  place-items: center;
+  width: 56px; height: 56px;
+  margin-bottom: var(--esp-5);
+  background: var(--verde-100);
+  border-radius: var(--radio-md);
+  color: var(--verde-700);
+}
+.servicio__icono svg { width: 28px; height: 28px; }
+
+.servicio__norma {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-texto-tenue);
+}
+.servicio__titulo { margin-top: var(--esp-2); font-size: var(--texto-xl); font-weight: var(--peso-bold); }
+.servicio__texto { margin-top: var(--esp-3); color: var(--color-texto-suave); }
+
+/* Empuja el botón al fondo para que las dos tarjetas queden parejas */
+.servicio__accion { margin-top: auto; padding-top: var(--esp-5); }
+
+/* ---------------------------------------------------------------------------
+   8. NORMATIVIDAD — banda de acreditaciones
+   Las NOMs son el activo de confianza del negocio, no letra chiquita.
+   Aquí se ven de un vistazo; el texto completo va en el acordeón.
+   --------------------------------------------------------------------------- */
+.acreditacion { text-align: center; }
+
+.acreditacion__badges {
+  margin-top: var(--esp-6);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-3);
+}
+
+.badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: var(--esp-3) var(--esp-4);
+  background: var(--blanco);
+  border: 1px solid var(--color-borde);
+  border-left: 3px solid var(--color-acento);
+  border-radius: var(--radio-sm);
+  text-align: left;
+}
+.badge__codigo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--color-texto);
+}
+.badge__que {
+  font-size: var(--texto-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-texto-tenue);
+}
+
+/* ---------------------------------------------------------------------------
+   9. BOTÓN FLOTANTE DE WHATSAPP
+   El elemento más importante del sitio: nunca debe desaparecer.
+   Va en verde WhatsApp (no verde PAC) porque aquí gana el reconocimiento
+   instantáneo sobre la coherencia de marca.
+   --------------------------------------------------------------------------- */
+.wa-flotante {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.75rem);
+  bottom: clamp(1rem, 3vw, 1.75rem);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: 0.85rem 1.25rem;
+  background: var(--whatsapp);
+  color: var(--blanco);
+  font-weight: var(--peso-bold);
+  text-decoration: none;
+  border-radius: var(--radio-full);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35), var(--sombra-lg);
+  transition: background var(--transicion), transform var(--transicion);
+}
+.wa-flotante:hover { background: var(--whatsapp-oscuro); transform: translateY(-2px); }
+.wa-flotante svg { width: 26px; height: 26px; flex-shrink: 0; }
+
+/* En móvil se colapsa a solo el ícono para no tapar contenido */
+@media (max-width: 620px) {
+  .wa-flotante { padding: 0.9rem; }
+  .wa-flotante .wa-flotante__texto { display: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   10. DATO PENDIENTE
+   Marca en ámbar cualquier dato que todavía no nos da el cliente.
+   Es feo a propósito: así es imposible publicar sin darse cuenta.
+   Para quitar un pendiente, borra la etiqueta <span class="pendiente"> y
+   escribe el dato real.
+   --------------------------------------------------------------------------- */
+.pendiente {
+  display: inline-block;
+  padding: 0.1em 0.5em;
+  background: var(--pendiente-fondo);
+  border: 1px dashed var(--pendiente-borde);
+  border-radius: var(--radio-sm);
+  color: var(--pendiente-texto);
+  font-size: 0.92em;
+  font-style: normal;
+  font-weight: var(--peso-medio);
+}
+
+/* ---------------------------------------------------------------------------
+   11. BARRA SUPERIOR — ubicación y horario
+   No es sticky a propósito: se va con el scroll para no comer alto en móvil.
+   El header de abajo sí se queda fijo.
+   --------------------------------------------------------------------------- */
+.topbar {
+  background: var(--gris-900);
+  color: var(--gris-300);
+  font-size: var(--texto-sm);
+}
+.topbar__interior {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+  min-height: 40px;
+  padding-block: var(--esp-2);
+}
+.topbar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transicion);
+}
+.topbar__item:hover { color: var(--verde-300); }
+.topbar__item svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--verde-300); }
+.topbar__sep { width: 1px; height: 16px; background: rgba(255,255,255,0.15); }
+
+/* En móvil solo cabe la dirección corta; el horario ya vive en la ficha del hero */
+.topbar__largo { display: none; }
+.topbar__corto { display: inline; }
+@media (min-width: 720px) {
+  .topbar__largo { display: inline; }
+  .topbar__corto { display: none; }
+}
+@media (max-width: 719px) { .topbar__horario, .topbar__sep { display: none; } }
+
+/* ---------------------------------------------------------------------------
+   12. NAVEGACIÓN DEL HEADER — solo escritorio
+   --------------------------------------------------------------------------- */
+.nav { display: none; }
+@media (min-width: 1040px) {
+  .nav { display: flex; align-items: center; gap: var(--esp-5); }
+}
+.nav a {
+  position: relative;
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  padding-block: var(--esp-2);
+  transition: color var(--transicion);
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--color-acento);
+  border-radius: var(--radio-full);
+  transform: scaleX(0);
+  transition: transform var(--transicion);
+}
+.nav a:hover { color: var(--color-texto); }
+.nav a:hover::after { transform: scaleX(1); }
+
+/* ---------------------------------------------------------------------------
+   13. PROCESO — pasos numerados
+   El número va grande y en verde claro detrás del contenido: es editorial,
+   corta el bloque de texto y se lee de un vistazo.
+   --------------------------------------------------------------------------- */
+.pasos {
+  margin-top: var(--esp-7);
+  display: grid;
+  gap: var(--esp-5);
+  counter-reset: paso;
+}
+@media (min-width: 700px)  { .pasos { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .pasos { grid-template-columns: repeat(4, 1fr); } }
+
+.paso {
+  position: relative;
+  padding: var(--esp-5) var(--esp-5) var(--esp-6);
+  background: var(--blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  counter-increment: paso;
+}
+.paso::before {
+  content: counter(paso, decimal-leading-zero);
+  position: absolute;
+  top: -0.35em; right: 0.1em;
+  font-size: 5.5rem;
+  font-weight: var(--peso-black);
+  line-height: 1;
+  color: var(--verde-100);
+  pointer-events: none;
+}
+.paso__titulo { position: relative; font-size: var(--texto-lg); font-weight: var(--peso-bold); }
+.paso__texto  { position: relative; margin-top: var(--esp-2); font-size: var(--texto-sm); color: var(--color-texto-suave); }
+
+/* ---------------------------------------------------------------------------
+   14. PULL QUOTE — el compromiso de imparcialidad
+   --------------------------------------------------------------------------- */
+.cita {
+  position: relative;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: var(--esp-7) var(--esp-5) 0;
+  text-align: center;
+}
+.cita__texto {
+  margin: 0;
+  font-size: var(--texto-2xl);
+  font-weight: var(--peso-medio);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.cita__texto strong { font-weight: var(--peso-black); color: var(--verde-700); }
+.cita__pie {
+  margin-top: var(--esp-5);
+  font-size: var(--texto-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-texto-tenue);
+}
+
+/* ---------------------------------------------------------------------------
+   15. ACORDEÓN (normatividad y preguntas frecuentes)
+   Usa <details>/<summary> nativo: funciona sin JavaScript, es accesible con
+   teclado y Google puede indexar el contenido aunque esté colapsado.
+   --------------------------------------------------------------------------- */
+.acordeon { margin-top: var(--esp-6); border-top: 1px solid var(--color-borde); }
+
+.acordeon details { border-bottom: 1px solid var(--color-borde); }
+
+.acordeon summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+  padding: var(--esp-5) 0;
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-bold);
+  cursor: pointer;
+  list-style: none;              /* quita el triangulito por defecto */
+  transition: color var(--transicion);
+}
+.acordeon summary::-webkit-details-marker { display: none; }
+.acordeon summary:hover { color: var(--verde-700); }
+
+/* Chevron propio, que gira al abrir */
+.acordeon summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 11px; height: 11px;
+  border-right: 2.5px solid var(--verde-600);
+  border-bottom: 2.5px solid var(--verde-600);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 220ms ease;
+}
+.acordeon details[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+
+.acordeon__cuerpo {
+  padding-bottom: var(--esp-5);
+  max-width: var(--ancho-texto);
+  color: var(--color-texto-suave);
+}
+.acordeon__cuerpo p + p { margin-top: var(--esp-4); }
+.acordeon__cuerpo strong { color: var(--color-texto); }
+
+/* Lista de normas dentro del acordeón */
+.lista-normas { margin: var(--esp-4) 0 0; padding: 0; list-style: none; display: grid; gap: var(--esp-2); }
+.lista-normas li {
+  position: relative;
+  padding-left: var(--esp-5);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-texto);
+}
+.lista-normas li::before {
+  content: "";
+  position: absolute; left: 0; top: 0.65em;
+  width: 8px; height: 8px;
+  background: var(--color-acento);
+  border-radius: 2px;
+}
+
+/* Animación de apertura donde el navegador la soporta (Chrome/Edge modernos).
+   Donde no, simplemente abre de golpe: no se rompe nada. */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  .acordeon details::details-content {
+    height: 0;
+    overflow: hidden;
+    transition: height 280ms ease, content-visibility 280ms allow-discrete;
+  }
+  .acordeon details[open]::details-content { height: auto; }
+}
+
+/* ---------------------------------------------------------------------------
+   16. UBICACIÓN Y MAPA
+   El mapa NO se carga al abrir la página: primero se ve un panel propio y
+   ligero, y el mapa real de Google se inserta hasta que el usuario da clic.
+   Así la página carga rápido en datos móviles y no se cargan cookies de
+   terceros a quien nunca abrió el mapa.
+   --------------------------------------------------------------------------- */
+.ubicacion__grid { margin-top: var(--esp-7); display: grid; gap: var(--esp-6); align-items: start; }
+/* La columna izquierda necesita ~510px para que los botones de Google Maps y
+   Waze quepan en un solo renglón. De ahí la proporción. */
+@media (min-width: 900px) { .ubicacion__grid { grid-template-columns: 1.1fr 1.15fr; } }
+
+.ubicacion__datos { display: grid; gap: var(--esp-5); }
+
+.dato { display: flex; gap: var(--esp-4); }
+.dato__icono {
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  width: 42px; height: 42px;
+  background: var(--verde-100);
+  color: var(--verde-700);
+  border-radius: var(--radio-md);
+}
+.dato__icono svg { width: 20px; height: 20px; }
+.dato__label {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-texto-tenue);
+}
+.dato__valor { margin-top: 2px; font-weight: var(--peso-medio); }
+.dato__valor a { color: inherit; text-decoration: none; border-bottom: 2px solid var(--verde-200); }
+.dato__valor a:hover { color: var(--verde-700); border-color: var(--verde-600); }
+
+.ubicacion__botones { display: flex; flex-wrap: wrap; gap: var(--esp-3); margin-top: var(--esp-2); }
+
+/* --- Contenedor del mapa --- */
+/* OJO: nada de min-height aquí. Con aspect-ratio, un min-height obliga al
+   navegador a ensanchar la caja para respetar la proporción, y eso desborda
+   la pantalla en móvil. La proporción sola ya define el alto. */
+.mapa {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radio-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-borde);
+  background: var(--gris-900);
+}
+@media (min-width: 640px) { .mapa { aspect-ratio: 4 / 3; } }
+@media (min-width: 900px) { .mapa { aspect-ratio: 16 / 11; } }
+
+.mapa iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Panel previo (facade). Es un botón: todo el bloque es clicable. */
+.mapa__facade {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--esp-4);
+  width: 100%;
+  padding: var(--esp-6);
+  border: 0;
+  background: var(--gris-900);
+  color: var(--blanco);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+/* Cuadrícula tenue de fondo: sugiere un plano sin fingir un mapa real */
+.mapa__facade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(151, 196, 94, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(151, 196, 94, 0.10) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(circle at 50% 45%, #000 15%, transparent 72%);
+}
+.mapa__facade > * { position: relative; }
+
+.mapa__pin {
+  display: grid; place-items: center;
+  width: 58px; height: 58px;
+  background: var(--verde-700);
+  border-radius: var(--radio-full);
+  box-shadow: 0 0 0 10px rgba(151, 196, 94, 0.16), 0 0 0 22px rgba(151, 196, 94, 0.07);
+}
+.mapa__pin svg { width: 26px; height: 26px; color: var(--blanco); }
+
+.mapa__titulo { font-size: var(--texto-lg); font-weight: var(--peso-bold); }
+.mapa__dir { max-width: 30ch; font-size: var(--texto-sm); color: var(--gris-300); }
+.mapa__cta {
+  display: inline-flex; align-items: center; gap: var(--esp-2);
+  padding: 0.7rem 1.25rem;
+  background: var(--blanco);
+  color: var(--gris-900);
+  border-radius: var(--radio-md);
+  font-weight: var(--peso-bold);
+  font-size: var(--texto-sm);
+  transition: background var(--transicion);
+}
+.mapa__facade:hover .mapa__cta { background: var(--verde-300); }
+
+/* ---------------------------------------------------------------------------
+   17. FOOTER
+   --------------------------------------------------------------------------- */
+.footer {
+  background: var(--gris-900);
+  color: var(--gris-300);
+  /* El extra abajo es para que el botón flotante de WhatsApp no tape
+     la última línea del footer. */
+  padding-block: var(--esp-9) calc(var(--esp-6) + 4rem);
+}
+.footer__grid { display: grid; gap: var(--esp-7); }
+@media (min-width: 760px)  { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+
+.footer .logo__nombre { color: var(--blanco); }
+.footer .logo__bajada { color: var(--gris-500); }
+
+.footer__desc { margin-top: var(--esp-4); max-width: 34ch; font-size: var(--texto-sm); color: var(--gris-500); }
+
+.footer__titulo {
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blanco);
+  margin-bottom: var(--esp-4);
+}
+.footer__lista { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--esp-3); font-size: var(--texto-sm); }
+.footer__lista a { color: var(--gris-300); text-decoration: none; transition: color var(--transicion); }
+.footer__lista a:hover { color: var(--verde-300); }
+
+.footer__legal {
+  margin-top: var(--esp-8);
+  padding-top: var(--esp-5);
+  border-top: 1px solid rgba(255,255,255,0.10);
+  display: flex; flex-wrap: wrap; gap: var(--esp-3) var(--esp-5);
+  justify-content: space-between;
+  font-size: var(--texto-xs);
+  color: var(--gris-500);
+}
+
+/* ---------------------------------------------------------------------------
+   18. APARICIÓN AL HACER SCROLL
+   Sutil a propósito: 14px de desplazamiento y medio segundo. Si se nota
+   demasiado, se ve barato. La clase .js la pone el propio HTML, así que si
+   el JavaScript falla el contenido igual se ve.
+   --------------------------------------------------------------------------- */
+html.js .revelar { opacity: 0; transform: translateY(14px); }
+html.js .revelar.visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .revelar { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   19. BOTÓN FLOTANTE — espacio al final del body
+   --------------------------------------------------------------------------- */
+body { padding-bottom: 0; }
+
+/* ---------------------------------------------------------------------------
+   20. IMPRESIÓN
+   Alguien va a imprimir esta página para llevar la dirección. Que salga bien.
+   --------------------------------------------------------------------------- */
+@media print {
+  .topbar, .nav, .header__acciones, .wa-flotante, .mapa, .acordeon summary::after { display: none !important; }
+  .header { position: static; border-bottom: 2px solid #000; }
+  body { padding-bottom: 0; color: #000; }
+  .seccion, .hero { padding-block: 1.2rem; break-inside: avoid; }
+  .ficha, .servicio, .paso { border: 1px solid #999; box-shadow: none; break-inside: avoid; }
+  .ficha__encabezado { background: #fff !important; color: #000 !important; border-bottom: 1px solid #999; }
+  .ficha__sello { color: #000 !important; }
+  .footer { background: #fff; color: #000; }
+  .footer .logo__nombre { color: #000; }
+  html.js .revelar { opacity: 1 !important; transform: none !important; }
+  .acordeon details { break-inside: avoid; }
+  /* Muestra la URL real de los enlaces al imprimir */
+  .acordeon__cuerpo a::after, .dato__valor a::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+}
