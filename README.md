@@ -133,8 +133,9 @@ que la vuelvan a leer, porque guardan copia: <https://developers.facebook.com/to
 ## Pendientes
 
 ### Bloqueantes para publicar
-- [ ] **Horario de atención** — es el dato más buscado de un verificentro.
-      Hoy dice "por confirmar" en ámbar, que es un parche.
+- [x] **Horario de atención** — confirmado: lunes a sábado, 9:00 a 18:00 h.
+      Ya está en `index.html` (topbar, ficha, contacto, footer y JSON-LD
+      `openingHours`) y en `404.html`.
 - [ ] **Dominio.** Buscar `EJEMPLO.mx` en `index.html` y reemplazar (5 lugares:
       canonical, Open Graph y JSON-LD). También en `robots.txt` y `sitemap.xml`.
 - [ ] **¿Quién contesta el WhatsApp?** Cada botón del sitio manda a ese número.
@@ -174,8 +175,13 @@ que la vuelvan a leer, porque guardan copia: <https://developers.facebook.com/to
 
 El sitio por sí solo no genera visitas. Para búsquedas locales el orden de impacto es:
 
-1. **Perfil de Empresa en Google** verificado — categoría correcta, horario, fotos,
-   teléfono. Es lo que aparece en el mapa cuando alguien busca desde el celular.
+1. **Perfil de Empresa en Google.** El perfil YA EXISTE en Maps (4.6★, 11 reseñas)
+   pero está sin reclamar por el negocio. Falta reclamarlo y luego corregir la
+   categoría, que hoy dice "Department of Transportation". Es lo que aparece en el
+   mapa cuando alguien busca desde el celular.
+   El nombre en Maps es "Verificación Federal Prueba Ambiental del Centro,
+   S. de R.L. de C.V." — ese mismo va en el JSON-LD del sitio. Si se cambia en un
+   lado, cambiarlo en el otro.
 2. Este sitio, como destino y respaldo de credibilidad.
 3. **Reseñas** — un QR impreso en recepción que abra el formulario.
 4. **WhatsApp Business** (no el normal): perfil de negocio, horario y mensaje de

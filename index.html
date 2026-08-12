@@ -112,8 +112,7 @@
 
     <span class="topbar__item topbar__horario">
       <svg aria-hidden="true"><use href="#i-reloj"/></svg>
-      <!-- PENDIENTE: horario real. Sustituir el <span class="pendiente"> por el texto. -->
-      Horario: <span class="pendiente">por confirmar</span>
+      Horario: Lunes a sábado · 9:00 a 18:00 h
     </span>
   </div>
 </div>
@@ -244,10 +243,9 @@
 
         <div class="ficha__fila">
           <dt class="ficha__label">Horario</dt>
-          <!-- PENDIENTE: horario real. Es el dato más buscado del sitio. -->
           <dd class="ficha__valor">
-            Lunes a viernes · <span class="pendiente">por confirmar</span><br>
-            Sábado · <span class="pendiente">por confirmar</span>
+            Lunes a sábado · 9:00 a 18:00 h<br>
+            Domingo · Cerrado
           </dd>
         </div>
 
@@ -640,10 +638,9 @@
           <div class="dato__icono"><svg aria-hidden="true"><use href="#i-reloj"/></svg></div>
           <div>
             <p class="dato__label">Horario</p>
-            <!-- PENDIENTE: horario real -->
             <p class="dato__valor">
-              Lunes a viernes · <span class="pendiente">por confirmar</span><br>
-              Sábado · <span class="pendiente">por confirmar</span>
+              Lunes a sábado · 9:00 a 18:00 h<br>
+              Domingo · Cerrado
             </p>
           </div>
         </div>
@@ -723,8 +720,7 @@
           <li><a href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp 449 110 0153</a></li>
           <li><a href="tel:+524491100153">Llamar 449 110 0153</a></li>
           <li>Av. Independencia 604, Col. Paso Blanco<br>C.P. 20924, Jesús María, Ags.</li>
-          <!-- PENDIENTE: horario real -->
-          <li>Horario: <span class="pendiente">por confirmar</span></li>
+          <li>Horario: Lunes a sábado, 9:00 a 18:00 h</li>
         </ul>
       </div>
 
@@ -762,15 +758,13 @@
 
 <!-- ===========================================================================
      SCHEMA.ORG — le dice a Google qué negocio es, dónde está y qué responde.
-     PENDIENTE: agregar "openingHours" cuando confirmemos el horario. Formato:
-       "openingHours": ["Mo-Fr 08:00-18:00", "Sa 08:00-14:00"]
      =========================================================================== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "AutomotiveBusiness",
-  "name": "Prueba Ambiental del Centro S. de R.L. de C.V.",
-  "alternateName": "PAC",
+  "name": "Verificación Federal Prueba Ambiental del Centro, S. de R.L. de C.V.",
+  "alternateName": ["Prueba Ambiental del Centro S. de R.L. de C.V.", "PAC"],
   "description": "Unidad de inspección para autotransporte federal. Dictamen de baja emisión y verificación físico-mecánica de camiones y tractocamiones en Aguascalientes.",
   "url": "https://EJEMPLO.mx/",
   "telephone": "+52-449-110-0153",
@@ -784,6 +778,13 @@
     "addressCountry": "MX"
   },
   "geo": { "@type": "GeoCoordinates", "latitude": 21.9548, "longitude": -102.2959 },
+  "openingHours": ["Mo-Sa 09:00-18:00"],
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  }],
   "areaServed": { "@type": "State", "name": "Aguascalientes" },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
