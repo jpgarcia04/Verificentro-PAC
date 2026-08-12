@@ -6,6 +6,50 @@
    No pongas colores "a mano" en styles.css — usa estas variables.
    ============================================================================= */
 
+/* -----------------------------------------------------------------------------
+   FUENTE — Barlow, servida desde el propio sitio
+   -----------------------------------------------------------------------------
+   Los archivos viven en assets/fonts/. NO se piden a Google: así el sitio carga
+   igual de rápido sin depender de un tercero, y no se manda la IP de cada
+   visitante a otro servidor.
+
+   Es una grotesca ligeramente redondeada, inspirada en señalética carretera.
+   Casa con el wordmark del logo y aterriza el mundo del transporte.
+
+   Solo está el subconjunto "latin", que cubre todo el español (acentos, ñ, ¿, ¡).
+   Son 4 archivos, ~89 KB en total.
+   font-display:swap = el texto se ve de inmediato con la fuente del sistema y
+   cambia a Barlow al terminar de cargar. Nunca hay texto invisible.
+   ----------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/barlow-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/barlow-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/barlow-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../fonts/barlow-800.woff2') format('woff2');
+}
+
 :root {
 
   /* ---------------------------------------------------------------------------
@@ -78,11 +122,11 @@
 
   /* ---------------------------------------------------------------------------
      5. TIPOGRAFÍA
-     Por ahora usamos la fuente del sistema (rápida, cero descargas).
-     PENDIENTE: cambiar a Barlow auto-alojada en /assets/fonts/ cuando la subamos.
+     Barlow es la fuente de la marca. Lo que va después son los respaldos que
+     usa el navegador mientras Barlow termina de cargar.
      --------------------------------------------------------------------------- */
-  --fuente: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system,
-            "Helvetica Neue", Arial, sans-serif;
+  --fuente: "Barlow", "Segoe UI Variable Text", "Segoe UI", system-ui,
+            -apple-system, "Helvetica Neue", Arial, sans-serif;
 
   /* Escala fluida: crece sola entre móvil y escritorio, sin media queries. */
   --texto-xs:   0.75rem;                              /* 12px — etiquetas */

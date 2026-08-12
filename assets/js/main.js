@@ -42,7 +42,35 @@
   }
 
   /* ---------------------------------------------------------------------------
-     2. APARICIÓN AL HACER SCROLL
+     2. MENÚ MÓVIL — detalles de comodidad
+     El menú abre y cierra solo (es un <details> nativo). Aquí únicamente
+     agregamos que se cierre al elegir una sección o al tocar fuera, que es lo
+     que la gente espera. Si este bloque no corriera, el menú seguiría sirviendo.
+     --------------------------------------------------------------------------- */
+  var menu = document.querySelector('[data-menu]');
+
+  if (menu) {
+    // Al elegir una sección, se cierra el menú
+    menu.querySelectorAll('a').forEach(function (enlace) {
+      enlace.addEventListener('click', function () { menu.open = false; });
+    });
+
+    // Al tocar fuera del menú, se cierra
+    document.addEventListener('click', function (e) {
+      if (menu.open && !menu.contains(e.target)) menu.open = false;
+    });
+
+    // La tecla Escape también lo cierra
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.open) {
+        menu.open = false;
+        menu.querySelector('summary').focus();
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------------------------
+     3. APARICIÓN AL HACER SCROLL
      Cada elemento con class="revelar" entra con un fundido corto la primera vez
      que se asoma en pantalla. Se desactiva solo si el sistema del usuario pide
      menos animaciones.

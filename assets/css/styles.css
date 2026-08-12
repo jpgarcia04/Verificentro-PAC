@@ -550,6 +550,63 @@ a { color: var(--color-accion); }
 .nav a:hover::after { transform: scaleX(1); }
 
 /* ---------------------------------------------------------------------------
+   12b. MENÚ MÓVIL
+   Hecho con <details>/<summary>: abre y cierra sin JavaScript, se navega con
+   teclado y no necesita librerías. El JS solo agrega el detalle de cerrarlo
+   al elegir una opción o al tocar fuera.
+   --------------------------------------------------------------------------- */
+.menu { position: relative; }
+@media (min-width: 1040px) { .menu { display: none; } }
+
+.menu > summary {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--color-borde-fuerte);
+  border-radius: var(--radio-md);
+  color: var(--color-texto);
+  cursor: pointer;
+  list-style: none;
+  transition: border-color var(--transicion), color var(--transicion);
+}
+.menu > summary::-webkit-details-marker { display: none; }
+.menu > summary:hover { border-color: var(--verde-600); color: var(--verde-700); }
+
+/* Se cambia el ícono de "hamburguesa" a "cerrar" según esté abierto */
+.menu__abrir  { display: block; }
+.menu__cerrar { display: none; }
+.menu[open] > summary .menu__abrir  { display: none; }
+.menu[open] > summary .menu__cerrar { display: block; }
+
+.menu__panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 70;
+  min-width: 232px;
+  padding: var(--esp-2);
+  background: var(--blanco);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  box-shadow: var(--sombra-lg);
+}
+.menu__panel a {
+  display: block;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radio-sm);
+  color: var(--color-texto);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  transition: background var(--transicion), color var(--transicion);
+}
+.menu__panel a:hover { background: var(--verde-50); color: var(--verde-700); }
+
+/* Separador antes del teléfono, que es acción y no navegación */
+.menu__panel hr { margin: var(--esp-2) 0; border: 0; border-top: 1px solid var(--color-borde); }
+.menu__panel .menu__tel { color: var(--verde-700); font-weight: var(--peso-bold); font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------------------
    13. PROCESO — pasos numerados
    El número va grande y en verde claro detrás del contenido: es editorial,
    corta el bloque de texto y se lee de un vistazo.
