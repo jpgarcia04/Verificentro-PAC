@@ -812,14 +812,17 @@ a { color: var(--color-accion); }
   text-align: center;
   cursor: pointer;
 }
-/* Cuadrícula tenue de fondo: sugiere un plano sin fingir un mapa real */
+/* Cuadrícula tenue de fondo: sugiere un plano sin fingir un mapa real.
+   Va en rgba() a mano porque necesita transparencia: es el verde del logo
+   (--pac-verde-logo, #A7C776) en sus componentes R,G,B. Si cambia ese token,
+   cambia también estos tres números y los del .mapa__pin de aquí abajo. */
 .mapa__facade::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(151, 196, 94, 0.10) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(151, 196, 94, 0.10) 1px, transparent 1px);
+    linear-gradient(rgba(167, 199, 118, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 199, 118, 0.10) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(circle at 50% 45%, #000 15%, transparent 72%);
 }
@@ -830,7 +833,7 @@ a { color: var(--color-accion); }
   width: 58px; height: 58px;
   background: var(--verde-700);
   border-radius: var(--radio-full);
-  box-shadow: 0 0 0 10px rgba(151, 196, 94, 0.16), 0 0 0 22px rgba(151, 196, 94, 0.07);
+  box-shadow: 0 0 0 10px rgba(167, 199, 118, 0.16), 0 0 0 22px rgba(167, 199, 118, 0.07);
 }
 .mapa__pin svg { width: 26px; height: 26px; color: var(--blanco); }
 

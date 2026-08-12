@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>Plantilla de la imagen para compartir (Open Graph)</title>
+
+<!-- =============================================================================
+     PLANTILLA DE LA IMAGEN QUE SE VE AL COMPARTIR EL LINK
+     -----------------------------------------------------------------------------
+     Esto NO es una página del sitio. Es el molde con el que se genera
+     assets/img/og-pac.png (1200 x 630 px), que es la tarjeta que aparece cuando
+     alguien pega el link del sitio en WhatsApp, Facebook o Telegram.
+
+     Para volver a generarla (por ejemplo si cambia el teléfono):
+       1. edita los textos de abajo
+       2. corre este comando desde la carpeta del proyecto:
+
+     & "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --headless=new
+       --disable-gpu --hide-scrollbars --force-device-scale-factor=1
+       --virtual-time-budget=4000 --window-size=1200,630
+       --screenshot=assets\img\og-pac.png og-plantilla.html
+
+     Lleva noindex arriba para que Google no la trate como una página más.
+     ============================================================================= -->
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<style>
+  html, body { margin: 0; padding: 0; overflow: hidden; }
+
+  .tarjeta {
+    width: 1200px; height: 630px;
+    box-sizing: border-box;
+    background: var(--blanco);
+    font-family: var(--fuente);
+    color: var(--color-texto);
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+
+  /* Franja verde delgada arriba: le da borde a la tarjeta cuando el fondo
+     del chat también es blanco. */
+  .filo { height: 10px; background: var(--verde-300); flex-shrink: 0; }
+
+  /* overflow:hidden para que la hoja de agua se corte en el borde de la
+     tarjeta y no se meta en la barra oscura de abajo. */
+  .cuerpo { flex: 1; padding: 54px 72px 0; position: relative; overflow: hidden; }
+
+  /* Hoja grande de agua, saliéndose por la derecha. Solo llena el hueco:
+     va casi transparente para que nunca compita con el texto, y detrás de
+     todo (z-index 0 contra el 1 del contenido). */
+  .marca-agua {
+    position: absolute;
+    right: -110px; top: 30px;
+    width: 500px; height: 500px;
+    opacity: 0.17;
+    transform: rotate(-8deg);
+    z-index: 0;
+  }
+  .marca, .titulo, .servicios { position: relative; z-index: 1; }
+
+  /* --- Lockup de marca: el mismo del header del sitio --- */
+  .marca { display: flex; align-items: flex-start; gap: 18px; }
+  .marca__hoja { width: 76px; height: 76px; flex-shrink: 0; }
+  .marca__texto { padding-top: 2px; }
+  .marca__nombre {
+    font-size: 62px; font-weight: 800; line-height: 0.9;
+    letter-spacing: -0.015em; color: var(--pac-gris-logo);
+  }
+  .marca__onda { display: block; width: 100%; height: 9px; color: var(--verde-300); margin-top: 4px; }
+  .marca__bajada {
+    font-size: 19px; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--color-texto-suave); margin-top: 7px;
+  }
+
+  /* --- Mensaje --- */
+  .titulo {
+    margin: 44px 0 0;
+    font-size: 63px; font-weight: 800; line-height: 1.06;
+    letter-spacing: -0.02em; max-width: 17ch;
+  }
+  .titulo em { font-style: normal; color: var(--verde-700); }
+
+  .servicios {
+    margin-top: 26px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .servicios span {
+    font-size: 23px; font-weight: 600;
+    padding: 9px 20px;
+    border: 2px solid var(--verde-200);
+    background: var(--verde-50);
+    color: var(--verde-700);
+    border-radius: 999px;
+  }
+
+  /* --- Barra de datos abajo --- */
+  .pie {
+    background: var(--gris-900); color: var(--blanco);
+    padding: 0 72px;
+    height: 104px; flex-shrink: 0;
+    display: flex; align-items: center; gap: 54px;
+  }
+  .pie__dato { display: flex; align-items: center; gap: 14px; }
+  .pie__dato svg { width: 30px; height: 30px; color: var(--verde-300); flex-shrink: 0; }
+  .pie__dato b { font-size: 27px; font-weight: 700; letter-spacing: 0.01em; }
+</style>
+</head>
+<body>
+
+<div class="tarjeta">
+  <div class="filo"></div>
+
+  <div class="cuerpo">
+    <img class="marca-agua" src="assets/img/isotipo-pac.svg" alt="">
+
+    <div class="marca">
+      <img class="marca__hoja" src="assets/img/isotipo-pac.svg" alt="">
+      <div class="marca__texto">
+        <div class="marca__nombre">PAC</div>
+        <svg class="marca__onda" viewBox="0 0 120 8" fill="none" preserveAspectRatio="none">
+          <path d="M2 5.5C14 5.5 17 2 29 2s15 3.5 27 3.5S88 2 100 2s15 3.5 18 3.5"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                vector-effect="non-scaling-stroke"/>
+        </svg>
+        <div class="marca__bajada">Prueba Ambiental del Centro</div>
+      </div>
+    </div>
+
+    <h1 class="titulo"><em>Verificación federal</em> de camiones y tractocamiones</h1>
+
+    <div class="servicios">
+      <span>Dictamen de baja emisión</span>
+      <span>Físico-mecánica</span>
+    </div>
+  </div>
+
+  <div class="pie">
+    <div class="pie__dato">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <b>Jesús María, Aguascalientes</b>
+    </div>
+    <div class="pie__dato">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+      </svg>
+      <b>449 110 0153</b>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -53,22 +53,33 @@
 :root {
 
   /* ---------------------------------------------------------------------------
-     1. COLORES DE MARCA — leídos del logo
+     1. COLORES DE MARCA — medidos sobre el logo oficial
+
+     No están puestos a ojo: salen de muestrear assets/img/logo-pac.png por
+     dentro de cada zona (ignorando los bordes, que están mezclados con el
+     fondo). El verde coincide en la hoja y en la onda, así que es un solo
+     color de marca y no dos.
+
+     Ojo con una cosa: el archivo del cliente es un PNG con algo de ruido de
+     compresión y el fondo no es blanco puro, sino un blanco roto. Los valores
+     pueden estar corridos un 1-2 %. Si algún día llega el vectorial original,
+     vale la pena volver a medir.
      --------------------------------------------------------------------------- */
-  --pac-verde-logo: #97C45E;  /* hoja + onda del logo. Rellenos y acentos. */
-  --pac-gris-logo:  #63625D;  /* gris del wordmark "PAC" */
+  --pac-verde-logo: #A7C776;  /* hoja + onda del logo. Rellenos y acentos. */
+  --pac-gris-logo:  #7D7E79;  /* gris del wordmark "PAC" */
 
   /* ---------------------------------------------------------------------------
      2. ESCALA DE VERDE — mismo tono de la hoja (hue 86°), distintas luminosidades
 
      IMPORTANTE: el verde del logo (--verde-300) es demasiado claro para poner
-     texto blanco encima — da 2:1 de contraste y es ilegible. Por eso existe la
-     escala: el logo usa el 300, los botones usan el 700.
+     texto blanco encima — da 1.9:1 de contraste y es ilegible. Por eso existe
+     la escala: el logo usa el 300, los botones usan el 700.
+     El 300 sí sirve como texto sobre fondo oscuro (8.3:1 sobre --gris-900).
      --------------------------------------------------------------------------- */
   --verde-50:  #F4F8EC;   /* fondo muy suave */
   --verde-100: #E7F1D8;   /* fondo de tarjetas / badges */
   --verde-200: #CFE3B2;   /* bordes suaves */
-  --verde-300: #97C45E;   /* = el verde del logo. Íconos, hoja, onda. */
+  --verde-300: #A7C776;   /* = el verde del logo. Íconos, hoja, onda. */
   --verde-600: #5A8722;   /* 4.3:1 — solo texto grande o íconos */
   --verde-700: #46681A;   /* 6.4:1 — ✅ botones y texto verde sobre blanco */
   --verde-900: #2C4110;   /* hover de botones, fondos oscuros */
@@ -77,13 +88,17 @@
      3. ESCALA DE GRIS CÁLIDO — derivada del gris del wordmark
      Es gris cálido, no neutro. Eso mantiene el sitio cerca del logo y evita
      que se sienta frío/corporativo genérico.
+
+     El gris exacto del logo (#7D7E79) solo llega a 4.1:1 sobre blanco, o sea
+     que no alcanza para texto normal. Por eso el texto usa el 600, que es el
+     mismo tono un par de pasos más oscuro. El logo sí se dibuja con el suyo.
      --------------------------------------------------------------------------- */
   --gris-50:  #F8F7F4;
   --gris-100: #F0EFEA;
   --gris-200: #DFDDD6;
   --gris-300: #C6C4BB;
   --gris-500: #8E8C84;
-  --gris-600: #63625D;    /* = gris del logo. 6.1:1 — texto secundario */
+  --gris-600: #63625D;    /* 6.1:1 — texto secundario */
   --gris-800: #3A3936;    /* 11.5:1 — texto principal */
   --gris-900: #24231F;    /* footer, fondos oscuros */
 

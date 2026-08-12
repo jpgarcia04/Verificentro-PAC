@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===========================================================================
+     PÁGINA 404 — "esta dirección no existe"
+
+     Cuándo se ve: cuando alguien escribe mal la dirección, o cuando le dan clic
+     a un enlace viejo. Cloudflare Pages, Netlify y Vercel usan este archivo
+     solos, sin configurar nada: basta con que se llame 404.html y esté en la
+     raíz del sitio.
+
+     OJO CON LAS RUTAS: aquí todas empiezan con "/" (por ejemplo /assets/css/...)
+     y no con "assets/css/...". Es a propósito. Esta página se puede mostrar en
+     cualquier dirección inventada — /camiones/precios/algo — y con rutas
+     relativas el navegador buscaría el CSS en /camiones/precios/assets/ y la
+     página saldría sin estilos. Con "/" siempre lo busca en la raíz.
+     Efecto secundario: si abres este archivo con doble clic se ve sin diseño.
+     Para verlo bien, levanta el servidor local y entra a http://localhost:4321/404.html
+
+     noindex: le dice a Google que no la meta en resultados de búsqueda.
+     =========================================================================== -->
+<title>Página no encontrada | PAC</title>
+<meta name="robots" content="noindex, follow">
+
+<meta name="theme-color" content="#46681A">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+
+<link rel="preload" href="/assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/barlow-800.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
+
+<style>
+  /* Estilos que solo existen en esta página. Son cuatro reglas: no vale la pena
+     ensuciar styles.css, que es el archivo del sitio de verdad. */
+  .error {
+    min-height: 62vh;
+    display: flex; align-items: center;
+    padding-block: var(--esp-9);
+  }
+  .error__numero {
+    font-size: clamp(4.5rem, 3rem + 9vw, 9rem);
+    font-weight: var(--peso-black);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--verde-200);
+  }
+  .error__titulo { margin-top: var(--esp-4); font-size: var(--texto-3xl); font-weight: var(--peso-black); }
+  .error__texto  { margin-top: var(--esp-4); max-width: 46ch; color: var(--color-texto-suave); }
+  .error__acciones { margin-top: var(--esp-6); display: flex; flex-wrap: wrap; gap: var(--esp-3); }
+  .error__atajos {
+    margin-top: var(--esp-7);
+    padding-top: var(--esp-5);
+    border-top: 1px solid var(--color-borde);
+  }
+  .error__atajos p { font-size: var(--texto-xs); font-weight: var(--peso-bold);
+                     letter-spacing: 0.12em; text-transform: uppercase;
+                     color: var(--color-texto-tenue); }
+  .error__atajos ul {
+    margin: var(--esp-3) 0 0; padding: 0; list-style: none;
+    display: flex; flex-wrap: wrap; gap: var(--esp-3) var(--esp-5);
+    font-weight: var(--peso-medio);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Los dos íconos que usa esta página. En index.html hay más; aquí solo van
+     los que se ocupan, para no cargar de más. -->
+<svg style="display:none" aria-hidden="true" focusable="false">
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M20.465 3.488A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.478-8.413M12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m5.421-7.403c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+  </symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+  </symbol>
+</svg>
+
+
+<!-- ===========================================================================
+     HEADER — el mismo del sitio, pero sin menú: aquí lo único que importa
+     es que puedan regresar.
+     =========================================================================== -->
+<header class="header">
+  <div class="contenedor header__interior">
+
+    <a class="logo" href="/" aria-label="PAC — Prueba Ambiental del Centro, inicio">
+      <span class="logo__lockup">
+        <span class="logo__nombre">PAC</span>
+        <img class="logo__hoja" src="/assets/img/isotipo-pac.svg" alt="" width="21" height="21">
+      </span>
+      <svg class="logo__onda" viewBox="0 0 120 8" fill="none"
+           preserveAspectRatio="none" aria-hidden="true">
+        <path d="M2 5.5C14 5.5 17 2 29 2s15 3.5 27 3.5S88 2 100 2s15 3.5 18 3.5"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              vector-effect="non-scaling-stroke"/>
+      </svg>
+      <span class="logo__bajada">Prueba Ambiental del Centro</span>
+    </a>
+
+    <div class="header__acciones">
+      <a class="header__tel" href="tel:+524491100153">
+        <svg width="18" height="18" aria-hidden="true"><use href="#i-tel"/></svg>
+        449 110 0153
+      </a>
+    </div>
+
+  </div>
+</header>
+
+
+<main class="error">
+  <div class="contenedor">
+
+    <p class="error__numero" aria-hidden="true">404</p>
+
+    <h1 class="error__titulo">Esta página no existe</h1>
+
+    <p class="error__texto">
+      Puede que la dirección esté mal escrita o que el enlace ya no sirva.
+      Lo que buscas seguramente está en el inicio; y si no, escríbenos por
+      WhatsApp y te decimos.
+    </p>
+
+    <div class="error__acciones">
+      <a class="boton boton--principal boton--grande" href="/">Ir al inicio</a>
+      <a class="boton boton--secundario boton--grande"
+         href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
+         target="_blank" rel="noopener">
+        <svg width="20" height="20" aria-hidden="true"><use href="#i-wa"/></svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+
+    <div class="error__atajos">
+      <p>Lo más buscado</p>
+      <ul>
+        <li><a href="/#servicios">Servicios</a></li>
+        <li><a href="/#proceso">Cómo funciona</a></li>
+        <li><a href="/#normatividad">Normatividad</a></li>
+        <li><a href="/#preguntas">Preguntas frecuentes</a></li>
+        <li><a href="/#ubicacion">Cómo llegar</a></li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+
+<!-- ===========================================================================
+     FOOTER — recortado a propósito. En el 404 no tiene caso repetir el menú
+     completo: los datos de contacto sí, porque puede ser lo único que alcance
+     a ver quien llegó aquí por error.
+     =========================================================================== -->
+<footer class="footer">
+  <div class="contenedor">
+    <div class="footer__grid">
+
+      <div>
+        <div class="logo">
+          <span class="logo__lockup">
+            <span class="logo__nombre">PAC</span>
+            <img class="logo__hoja" src="/assets/img/isotipo-pac.svg" alt="" width="21" height="21">
+          </span>
+          <svg class="logo__onda" viewBox="0 0 120 8" fill="none"
+               preserveAspectRatio="none" aria-hidden="true">
+            <path d="M2 5.5C14 5.5 17 2 29 2s15 3.5 27 3.5S88 2 100 2s15 3.5 18 3.5"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  vector-effect="non-scaling-stroke"/>
+          </svg>
+          <span class="logo__bajada">Prueba Ambiental del Centro</span>
+        </div>
+        <p class="footer__desc">
+          Unidad de inspección para autotransporte federal en Jesús María,
+          Aguascalientes. Dictámenes de baja emisión y condición físico-mecánica.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer__titulo">Contacto</p>
+        <ul class="footer__lista">
+          <li><a href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp 449 110 0153</a></li>
+          <li><a href="tel:+524491100153">Llamar 449 110 0153</a></li>
+          <li>Av. Independencia 604, Col. Paso Blanco<br>C.P. 20924, Jesús María, Ags.</li>
+          <!-- PENDIENTE: horario real. Cuando llegue, actualízalo también en index.html -->
+          <li>Horario: <span class="pendiente">por confirmar</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__titulo">Secciones</p>
+        <ul class="footer__lista">
+          <li><a href="/#servicios">Servicios</a></li>
+          <li><a href="/#proceso">Cómo funciona</a></li>
+          <li><a href="/#normatividad">Normatividad</a></li>
+          <li><a href="/#preguntas">Preguntas frecuentes</a></li>
+          <li><a href="/#ubicacion">Ubicación</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__legal">
+      <span>Prueba Ambiental del Centro S. de R.L. de C.V.</span>
+      <span>Aguascalientes, México</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Mismo botón flotante que en el resto del sitio -->
+<a class="wa-flotante"
+   href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
+   target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg aria-hidden="true"><use href="#i-wa"/></svg>
+  <span class="wa-flotante__texto">Escríbenos</span>
+</a>
+
+</body>
+</html>
