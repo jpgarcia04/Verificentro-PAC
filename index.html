@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Marca que hay JavaScript, para que las animaciones de scroll solo se
-     activen si realmente pueden ejecutarse. Va aquí arriba para evitar parpadeo. -->
-<script>document.documentElement.classList.add('js');</script>
 
 <!-- ===========================================================================
      SEO
@@ -49,13 +46,14 @@
      normal y el de los titulares) para que la página no cambie de fuente a media
      carga. Los otros dos pesos se piden solos cuando hacen falta. -->
 <link rel="preload" href="assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/barlow-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/tokens.css?v=e82ca5cb">
+<link rel="stylesheet" href="assets/css/styles.css?v=1d2a98eb">
 </head>
 
 <body>
+<a class="saltar-contenido" href="#inicio">Saltar al contenido</a>
 
 <!-- ===========================================================================
      ICONOS
@@ -86,6 +84,12 @@
   </symbol>
   <symbol id="i-ruta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3 11l18-8-8 18-2-8-8-2Z"/>
+  </symbol>
+  <symbol id="i-flecha" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m5 12 4 4L19 6"/>
   </symbol>
   <!-- La hoja del logo, maciza y sin nervaduras. Es la misma silueta que
        assets/img/isotipo-pac.svg (mismo viewBox, se pueden intercambiar), pero
@@ -124,8 +128,7 @@
 <header class="header">
   <div class="contenedor header__interior">
 
-    <!-- PENDIENTE: reemplazar por el logo oficial cuando el cliente lo mande.
-         Por ahora la hoja y la onda son vectores propios y "PAC" es texto. -->
+    <!-- El logo original se conserva en assets/img/logo-pac-original.png. -->
     <a class="logo" href="#inicio" aria-label="PAC — Prueba Ambiental del Centro, inicio">
       <span class="logo__lockup">
         <span class="logo__nombre">PAC</span>
@@ -189,7 +192,7 @@
 </header>
 
 
-<main id="inicio">
+<main id="inicio" tabindex="-1">
 
 <!-- ===========================================================================
      HERO
@@ -197,19 +200,19 @@
 <section class="hero">
   <div class="contenedor hero__grid">
 
-    <div>
+    <div class="hero__contenido">
       <p class="hero__eyebrow">
-        <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#i-hoja"/></svg>
-        Unidad de inspección acreditada
+        <span aria-hidden="true"></span>
+        Autotransporte federal de carga
       </p>
 
       <h1 class="hero__titulo">
-        <em>Verificación federal</em> para camiones y tractocamiones en Aguascalientes
+        Verificación federal.<br><em>Tu camino,<br> en regla.</em>
       </h1>
 
       <p class="hero__sub">
-        Emitimos dictámenes de baja emisión y de condición físico-mecánica para
-        unidades de autotransporte de carga, con apego a la normatividad vigente.
+        Baja emisión y verificación físico-mecánica para camiones y
+        tractocamiones en <strong>Jesús María, Aguascalientes.</strong>
       </p>
 
       <div class="hero__acciones">
@@ -217,58 +220,41 @@
            href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
            target="_blank" rel="noopener">
           <svg width="22" height="22" aria-hidden="true"><use href="#i-wa"/></svg>
-          Cotizar por WhatsApp
+          Consultar por WhatsApp
         </a>
-        <a class="boton boton--secundario boton--grande" href="tel:+524491100153">
-          <svg width="20" height="20" aria-hidden="true"><use href="#i-tel"/></svg>
-          Llamar
+        <a class="enlace-flecha" href="#servicios">
+          Conocer servicios
+          <svg width="20" height="20" aria-hidden="true"><use href="#i-flecha"/></svg>
         </a>
       </div>
 
-      <p class="hero__nota">Respondemos por WhatsApp. También puedes llegar directo a la unidad.</p>
+      <p class="hero__nota"><svg width="16" height="16" aria-hidden="true"><use href="#i-wa"/></svg> Atención directa. Resuelve tus dudas antes de venir.</p>
     </div>
 
-    <aside class="ficha" aria-label="Datos de la unidad de inspección">
-      <div class="ficha__encabezado">
-        <span class="ficha__titulo">Datos de la unidad</span>
-        <span class="ficha__sello">Acreditada</span>
+    <div class="hero__visual">
+      <div class="lamina">
+        <div class="lamina__cabecera"><span><svg width="16" height="16" aria-hidden="true"><use href="#i-hoja"/></svg> Prueba Ambiental del Centro</span><span class="lamina__folio" aria-hidden="true">PAC / AGS.</span></div>
+        <div class="lamina__dibujo">
+          <span class="lamina__rotulo" aria-hidden="true">Precisión en cada detalle.</span>
+          <img src="assets/img/tractocamion-tecnico.svg" width="760" height="480" alt="Ilustración técnica de un camión de carga" fetchpriority="high">
+          <span class="lamina__referencia" aria-hidden="true">AUTOTRANSPORTE / VISTA ILUSTRATIVA</span>
+        </div>
+        <div class="lamina__pie"><div><span class="lamina__etiqueta">Especialistas en tu unidad</span><p>Camiones y<br> tractocamiones.</p></div><svg width="44" height="44" aria-hidden="true"><use href="#i-hoja"/></svg></div>
       </div>
-
-      <dl class="ficha__lista">
-        <div class="ficha__fila">
-          <dt class="ficha__label">Dirección</dt>
-          <dd class="ficha__valor">Av. Independencia 604, Col. Paso Blanco<br>
-            C.P. 20924, Jesús María, Aguascalientes</dd>
-        </div>
-
-        <div class="ficha__fila">
-          <dt class="ficha__label">Horario</dt>
-          <dd class="ficha__valor">
-            Lunes a sábado · 9:00 a 18:00 h<br>
-            Domingo · Cerrado
-          </dd>
-        </div>
-
-        <div class="ficha__fila">
-          <dt class="ficha__label">Teléfono y WhatsApp</dt>
-          <dd class="ficha__valor"><a href="tel:+524491100153">449 110 0153</a></dd>
-        </div>
-
-        <div class="ficha__fila">
-          <dt class="ficha__label">Vehículos que atendemos</dt>
-          <dd class="ficha__valor">Camiones, tractocamiones y unidades de autotransporte federal de carga</dd>
-        </div>
-
-        <div class="ficha__fila">
-          <dt class="ficha__label">Dictámenes que emitimos</dt>
-          <dd class="ficha__valor">Baja emisión · Condición físico-mecánica</dd>
-        </div>
-      </dl>
-    </aside>
+      <div class="hero__pie-visual"><span>Inspección técnica. Atención cercana.</span><span aria-hidden="true">01 — 02</span></div>
+    </div>
 
   </div>
 </section>
 
+
+<div class="datos-rapidos">
+  <div class="contenedor datos-rapidos__grid">
+    <a class="datos-rapidos__item" href="#ubicacion"><svg aria-hidden="true"><use href="#i-pin"/></svg><div><span>Visítanos en</span><strong>Jesús María, Aguascalientes</strong></div><svg class="datos-rapidos__flecha" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+    <div class="datos-rapidos__item"><svg aria-hidden="true"><use href="#i-reloj"/></svg><div><span>Lunes a sábado</span><strong>9:00 a 18:00 h</strong></div></div>
+    <div class="datos-rapidos__item"><svg aria-hidden="true"><use href="#i-doc"/></svg><div><span>En una misma unidad</span><strong>Baja emisión y físico-mecánica</strong></div></div>
+  </div>
+</div>
 
 <!-- ===========================================================================
      SERVICIOS
@@ -276,32 +262,31 @@
 <section class="seccion" id="servicios">
   <div class="contenedor">
 
-    <p class="seccion__etiqueta revelar">Servicios</p>
-    <h2 class="seccion__titulo revelar">Dos dictámenes, un solo lugar</h2>
-    <p class="seccion__intro revelar">
-      Ambos servicios se realizan en nuestras instalaciones de Jesús María, bajo
-      procedimientos documentados y con equipo calibrado.
-    </p>
+    <div class="seccion__cabecera">
+      <div><p class="seccion__etiqueta revelar">01 / Nuestros servicios</p>
+      <h2 class="seccion__titulo revelar">Dos dictámenes.<br>Un solo lugar.</h2></div>
+      <p class="seccion__intro revelar">La atención que tu unidad necesita, con procedimientos documentados y equipo calibrado en nuestras instalaciones de Jesús María.</p>
+    </div>
 
     <div class="servicios__grid">
 
       <article class="servicio revelar">
-        <div class="servicio__icono"><svg aria-hidden="true"><use href="#i-medidor"/></svg></div>
+        <div class="servicio__cabecera"><div class="servicio__icono"><svg aria-hidden="true"><use href="#i-medidor"/></svg></div><span class="servicio__numero" aria-hidden="true">01</span></div>
         <p class="servicio__norma">NOM-045-SEMARNAT-2017</p>
         <h3 class="servicio__titulo">Dictamen de baja emisión</h3>
         <p class="servicio__texto">
-          Medición de opacidad de humo en unidades a diésel. Acredita que tu unidad
-          cumple los límites de emisión establecidos por la norma.
+          Medición de la opacidad del humo en unidades a diésel para evaluar
+          el cumplimiento de los límites de emisión establecidos por la norma.
         </p>
         <div class="servicio__accion">
-          <a class="boton boton--secundario boton--sm"
+          <a class="enlace-flecha"
              href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20el%20dictamen%20de%20baja%20emisi%C3%B3n"
-             target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+             target="_blank" rel="noopener">Consultar baja emisión <svg width="22" height="22" aria-hidden="true"><use href="#i-flecha"/></svg></a>
         </div>
       </article>
 
       <article class="servicio revelar">
-        <div class="servicio__icono"><svg aria-hidden="true"><use href="#i-llave"/></svg></div>
+        <div class="servicio__cabecera"><div class="servicio__icono"><svg aria-hidden="true"><use href="#i-llave"/></svg></div><span class="servicio__numero" aria-hidden="true">02</span></div>
         <p class="servicio__norma">NOM-068-SCT-2-2014</p>
         <h3 class="servicio__titulo">Verificación físico-mecánica</h3>
         <p class="servicio__texto">
@@ -309,9 +294,9 @@
           debe cumplir para circular en caminos y puentes de jurisdicción federal.
         </p>
         <div class="servicio__accion">
-          <a class="boton boton--secundario boton--sm"
+          <a class="enlace-flecha"
              href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20informaci%C3%B3n%20sobre%20la%20verificaci%C3%B3n%20f%C3%ADsico-mec%C3%A1nica"
-             target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+             target="_blank" rel="noopener">Consultar físico-mecánica <svg width="22" height="22" aria-hidden="true"><use href="#i-flecha"/></svg></a>
         </div>
       </article>
 
@@ -326,13 +311,15 @@
 <section class="seccion seccion--alt" id="proceso">
   <div class="contenedor">
 
-    <p class="seccion__etiqueta revelar">Cómo funciona</p>
-    <h2 class="seccion__titulo revelar">Del primer mensaje al dictamen</h2>
+    <div class="seccion__cabecera"><div>
+    <p class="seccion__etiqueta revelar">02 / Un proceso claro</p>
+    <h2 class="seccion__titulo revelar">Tu verificación,<br>paso a paso.</h2>
+    </div><p class="seccion__intro revelar">Conoce qué esperar en tu visita. El primer paso es resolver tus dudas con nosotros.</p></div>
 
     <div class="pasos">
       <article class="paso revelar">
         <h3 class="paso__titulo">Contacto</h3>
-        <p class="paso__texto">Escríbenos por WhatsApp para resolver dudas antes de venir, o llega directo a la unidad.</p>
+        <p class="paso__texto">Escríbenos por WhatsApp. Consulta el servicio, los requisitos y la disponibilidad antes de venir.</p>
       </article>
       <article class="paso revelar">
         <h3 class="paso__titulo">Recepción</h3>
@@ -350,21 +337,20 @@
 
     <!-- Requisitos: mientras no tengamos la lista, el bloque convierte la duda
          en un mensaje de WhatsApp en lugar de dejar el hueco vacío. -->
-    <div class="servicio revelar" style="margin-top:var(--esp-5); flex-direction:row; flex-wrap:wrap; align-items:center; gap:var(--esp-5); background:var(--blanco)">
-      <div class="servicio__icono" style="margin-bottom:0"><svg aria-hidden="true"><use href="#i-doc"/></svg></div>
-      <div style="flex:1 1 18rem">
-        <h3 class="servicio__titulo" style="margin-top:0">¿Qué necesito traer?</h3>
+    <div class="requisitos revelar">
+      <div class="requisitos__icono"><svg width="28" height="28" aria-hidden="true"><use href="#i-doc"/></svg></div>
+      <div class="requisitos__contenido">
+        <h3>Prepara tu visita.</h3>
         <!-- PENDIENTE: lista real de requisitos y documentos. -->
         <p class="servicio__texto">
-          La lista de documentos está <span class="pendiente">por confirmar</span>.
-          Escríbenos con los datos de tu unidad y te decimos exactamente qué necesitas.
+          Cuéntanos qué unidad tienes y te orientamos sobre la documentación necesaria.
         </p>
       </div>
       <a class="boton boton--principal"
          href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20saber%20qu%C3%A9%20documentos%20necesito%20para%20verificar%20mi%20unidad"
          target="_blank" rel="noopener">
         <svg width="20" height="20" aria-hidden="true"><use href="#i-wa"/></svg>
-        Preguntar requisitos
+        Consultar requisitos
       </a>
     </div>
 
@@ -376,14 +362,14 @@
      COMPROMISO — imparcialidad
      =========================================================================== -->
 <section class="seccion" id="compromiso">
-  <div class="contenedor">
+  <div class="contenedor compromiso__grid">
+    <div class="compromiso__marca" aria-hidden="true"><img src="assets/img/isotipo-pac.svg" alt="" width="170" height="170"><span>PAC / NUESTRO COMPROMISO</span></div>
     <blockquote class="cita revelar">
+      <p class="seccion__etiqueta">Independencia y confianza</p>
       <p class="cita__texto">
-        Nuestros inspectores trabajan <strong>libres de cualquier presión comercial
-        o financiera</strong> que pudiera influir en su criterio técnico o afectar
-        el resultado de una inspección.
+        La confianza se construye con <strong>inspecciones imparciales.</strong>
       </p>
-      <footer class="cita__pie">La independencia es el principio de la unidad</footer>
+      <footer class="cita__pie">Nuestros inspectores trabajan libres de presiones comerciales o financieras que puedan influir en su criterio técnico. La independencia es el principio de nuestra unidad.</footer>
       <svg class="onda onda--centrada" viewBox="0 0 220 26" fill="none" aria-hidden="true">
         <defs>
           <linearGradient id="fadeOnda1" x1="0" x2="1">
@@ -410,9 +396,9 @@
   <div class="contenedor">
 
     <div class="acreditacion">
-      <p class="seccion__etiqueta revelar" style="justify-content:center">Respaldo normativo</p>
-      <h2 class="seccion__titulo revelar">Trabajamos bajo norma, no bajo criterio</h2>
-      <p class="seccion__intro revelar" style="margin-inline:auto">
+      <p class="seccion__etiqueta revelar">03 / Respaldo normativo</p>
+      <h2 class="seccion__titulo revelar">Rigor técnico.<br>En cada inspección.</h2>
+      <p class="seccion__intro revelar">
         Cada inspección se realiza conforme a la legislación y los lineamientos
         técnicos vigentes que nos aplican.
       </p>
@@ -442,7 +428,7 @@
       </div>
     </div>
 
-    <div class="acordeon revelar" style="max-width:52rem; margin-inline:auto">
+    <div class="acordeon acordeon--normas revelar">
 
       <details>
         <summary>Métodos y procedimientos de inspección</summary>
@@ -532,12 +518,16 @@
      final, para que Google pueda mostrarlas directo en los resultados.
      =========================================================================== -->
 <section class="seccion" id="preguntas">
-  <div class="contenedor">
+  <div class="contenedor preguntas__grid">
 
-    <p class="seccion__etiqueta revelar">Preguntas frecuentes</p>
-    <h2 class="seccion__titulo revelar">Lo que más nos preguntan</h2>
+    <div class="preguntas__intro">
+      <p class="seccion__etiqueta revelar">04 / Antes de venir</p>
+      <h2 class="seccion__titulo revelar">Tus dudas,<br>por aquí.</h2>
+      <p class="seccion__intro revelar">La información que necesitas para dar el siguiente paso.</p>
+      <a class="enlace-flecha preguntas__contacto" href="https://wa.me/524491100153?text=Hola%2C%20tengo%20una%20duda%20sobre%20la%20verificaci%C3%B3n%20de%20mi%20unidad" target="_blank" rel="noopener">¿Otra pregunta? Escríbenos <svg width="20" height="20" aria-hidden="true"><use href="#i-flecha"/></svg></a>
+    </div>
 
-    <div class="acordeon revelar" style="max-width:52rem">
+    <div class="acordeon revelar">
 
       <details>
         <summary>¿Qué vehículos pueden verificarse aquí?</summary>
@@ -574,7 +564,7 @@
       <details>
         <summary>¿Cómo cotizo o agendo?</summary>
         <div class="acordeon__cuerpo">
-          <p>Por WhatsApp al 449 110 0153. Es la vía más rápida: mándanos los datos de tu
+          <p>Por <a href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20cotizar%20una%20verificaci%C3%B3n" target="_blank" rel="noopener">WhatsApp al 449 110 0153</a>. Mándanos los datos de tu
           unidad y el servicio que necesitas.</p>
         </div>
       </details>
@@ -583,8 +573,8 @@
         <summary>¿Cuánto cuesta el servicio?</summary>
         <div class="acordeon__cuerpo">
           <!-- PENDIENTE: precios o rango. Mientras, se deriva a WhatsApp. -->
-          <p>Los precios están <span class="pendiente">por confirmar</span> en esta página.
-          Escríbenos por WhatsApp y te cotizamos según tu unidad y el dictamen que necesites.</p>
+          <p>Consulta el costo según tu unidad y el dictamen que necesitas.
+          <a href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20consultar%20el%20costo%20de%20una%20verificaci%C3%B3n" target="_blank" rel="noopener">Solicita tu cotización por WhatsApp.</a></p>
         </div>
       </details>
 
@@ -592,8 +582,7 @@
         <summary>¿Necesito cita previa?</summary>
         <div class="acordeon__cuerpo">
           <!-- PENDIENTE: confirmar si trabajan con cita o por orden de llegada. -->
-          <p>Este dato está <span class="pendiente">por confirmar</span>. Te recomendamos
-          escribirnos antes de venir para asegurar disponibilidad.</p>
+          <p>Te recomendamos <a href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20consultar%20la%20disponibilidad%20para%20llevar%20mi%20unidad" target="_blank" rel="noopener">consultar la disponibilidad por WhatsApp</a> antes de venir. Así podemos orientarte para tu visita.</p>
         </div>
       </details>
 
@@ -608,8 +597,8 @@
 <section class="seccion seccion--alt" id="ubicacion">
   <div class="contenedor">
 
-    <p class="seccion__etiqueta revelar">Ubicación</p>
-    <h2 class="seccion__titulo revelar">Cómo llegar a la unidad</h2>
+    <div class="seccion__cabecera"><div><p class="seccion__etiqueta revelar">05 / Aquí te esperamos</p>
+    <h2 class="seccion__titulo revelar">Tu próxima parada:<br>Jesús María.</h2></div><p class="seccion__intro revelar">Encuentra nuestra unidad en Paso Blanco, Aguascalientes. Traza tu ruta y consulta con nosotros antes de salir.</p></div>
 
     <div class="ubicacion__grid">
 
@@ -630,7 +619,7 @@
             <p class="dato__label">Acceso</p>
             <!-- PENDIENTE: nota práctica de acceso para tractocamión (por dónde entrar,
                  si hay espacio para maniobrar). Es de lo más útil que puede llevar el sitio. -->
-            <p class="dato__valor"><span class="pendiente">Indicaciones de acceso por confirmar</span></p>
+            <p class="dato__valor"><a href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20indicaciones%20para%20el%20acceso%20a%20su%20unidad" target="_blank" rel="noopener">Consulta las indicaciones para tu unidad</a></p>
           </div>
         </div>
 
@@ -673,14 +662,23 @@
       <!-- El mapa real de Google se inserta al dar clic. Ver assets/js/main.js -->
       <div class="mapa revelar" data-mapa>
         <button class="mapa__facade" type="button">
+          <span class="mapa__region" aria-hidden="true">JESÚS MARÍA / AGUASCALIENTES</span>
           <span class="mapa__pin"><svg aria-hidden="true"><use href="#i-pin"/></svg></span>
-          <span class="mapa__titulo">Ver mapa interactivo</span>
+          <span class="mapa__titulo">Nos vemos en PAC.</span>
           <span class="mapa__dir">Av. Independencia 604, Col. Paso Blanco, Jesús María, Aguascalientes</span>
-          <span class="mapa__cta">Cargar el mapa de Google</span>
+          <span class="mapa__cta">Ver mapa interactivo <svg width="18" height="18" aria-hidden="true"><use href="#i-flecha"/></svg></span>
+          <span class="mapa__nota">El mapa de Google se carga al hacer clic.</span>
         </button>
       </div>
 
     </div>
+  </div>
+</section>
+
+<section class="contacto-final" aria-labelledby="contacto-titulo">
+  <div class="contenedor contacto-final__interior">
+    <div><p class="seccion__etiqueta">Hablemos de tu unidad</p><h2 id="contacto-titulo">El siguiente paso<br>empieza con un mensaje.</h2></div>
+    <div class="contacto-final__accion"><a class="boton boton--oscuro boton--grande" href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener"><svg width="22" height="22" aria-hidden="true"><use href="#i-wa"/></svg> Escríbenos por WhatsApp</a><p>Lunes a sábado · 9:00 a 18:00 h</p></div>
   </div>
 </section>
 
@@ -752,7 +750,7 @@
    href="https://wa.me/524491100153?text=Hola%2C%20vengo%20de%20su%20p%C3%A1gina%20web%20y%20quisiera%20m%C3%A1s%20informaci%C3%B3n"
    target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
   <svg aria-hidden="true"><use href="#i-wa"/></svg>
-  <span class="wa-flotante__texto">Escríbenos</span>
+  <span class="wa-flotante__texto">¿Te orientamos?</span>
 </a>
 
 
@@ -833,6 +831,6 @@
 }
 </script>
 
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=cd629fd0" defer></script>
 </body>
 </html>

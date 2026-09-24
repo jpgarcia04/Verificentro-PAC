@@ -31,27 +31,29 @@
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 
 <link rel="preload" href="/assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/barlow-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/barlow-600.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="/assets/css/tokens.css">
-<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="stylesheet" href="/assets/css/tokens.css?v=e82ca5cb">
+<link rel="stylesheet" href="/assets/css/styles.css?v=1d2a98eb">
 
 <style>
   /* Estilos que solo existen en esta página. Son cuatro reglas: no vale la pena
      ensuciar styles.css, que es el archivo del sitio de verdad. */
   .error {
-    min-height: 62vh;
+    min-height: 68vh;
     display: flex; align-items: center;
-    padding-block: var(--esp-9);
+    padding-block: var(--esp-seccion);
+    background: var(--color-papel);
   }
   .error__numero {
     font-size: clamp(4.5rem, 3rem + 9vw, 9rem);
     font-weight: var(--peso-black);
     line-height: 0.85;
     letter-spacing: -0.04em;
-    color: var(--verde-200);
+    color: var(--color-accion);
+    opacity: 0.25;
   }
-  .error__titulo { margin-top: var(--esp-4); font-size: var(--texto-3xl); font-weight: var(--peso-black); }
+  .error__titulo { margin-top: var(--esp-5); font-size: var(--texto-3xl); font-weight: var(--peso-medio); letter-spacing: -0.035em; }
   .error__texto  { margin-top: var(--esp-4); max-width: 46ch; color: var(--color-texto-suave); }
   .error__acciones { margin-top: var(--esp-6); display: flex; flex-wrap: wrap; gap: var(--esp-3); }
   .error__atajos {
@@ -71,6 +73,7 @@
 </head>
 
 <body>
+<a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
 <!-- Los dos íconos que usa esta página. En index.html hay más; aquí solo van
      los que se ocupan, para no cargar de más. -->
@@ -106,6 +109,7 @@
     </a>
 
     <div class="header__acciones">
+      <a class="boton boton--principal boton--sm" href="https://wa.me/524491100153?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener"><svg width="18" height="18" aria-hidden="true"><use href="#i-wa"/></svg> WhatsApp</a>
       <a class="header__tel" href="tel:+524491100153">
         <svg width="18" height="18" aria-hidden="true"><use href="#i-tel"/></svg>
         449 110 0153
@@ -116,17 +120,16 @@
 </header>
 
 
-<main class="error">
+<main class="error" id="contenido" tabindex="-1">
   <div class="contenedor">
 
     <p class="error__numero" aria-hidden="true">404</p>
 
-    <h1 class="error__titulo">Esta página no existe</h1>
+    <h1 class="error__titulo">Retomemos el camino.</h1>
 
     <p class="error__texto">
-      Puede que la dirección esté mal escrita o que el enlace ya no sirva.
-      Lo que buscas seguramente está en el inicio; y si no, escríbenos por
-      WhatsApp y te decimos.
+      No encontramos esta página. Puedes volver al inicio para consultar
+      nuestros servicios o escribirnos por WhatsApp. Te orientamos.
     </p>
 
     <div class="error__acciones">

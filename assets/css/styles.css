@@ -1,933 +1,400 @@
-/* =============================================================================
-   PAC — ESTILOS DEL SITIO
-   -----------------------------------------------------------------------------
-   Orden del archivo:
-     1. Base y reset          5. Hero
-     2. Utilidades de layout  6. Onda separadora
-     3. Botones               7. Servicios
-     4. Header                8. Normatividad (badges)
-                              9. Botón flotante de WhatsApp
-   Los colores salen de tokens.css. No escribas hex aquí.
-   ============================================================================= */
+/* PAC · Sistema visual. Colores y medidas compartidas en tokens.css. */
 
-/* ---------------------------------------------------------------------------
-   1. BASE Y RESET
-   --------------------------------------------------------------------------- */
+/* Base y accesibilidad */
 *, *::before, *::after { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  /* Compensa el header fijo cuando se salta a una sección con #ancla */
-  scroll-padding-top: calc(var(--alto-header) + var(--esp-4));
-  -webkit-text-size-adjust: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: var(--fuente);
-  font-size: var(--texto-base);
-  line-height: var(--interlinea-cuerpo);
-  color: var(--color-texto);
-  background: var(--color-fondo);
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3 {
-  margin: 0;
-  line-height: var(--interlinea-titulo);
-  color: var(--color-texto);
-  text-wrap: balance;          /* evita títulos con una palabra huérfana */
-}
-p { margin: 0; }
-img, svg { max-width: 100%; display: block; }
-a { color: var(--color-accion); }
-
-/* Foco visible y consistente para navegación con teclado */
-:focus-visible {
-  outline: 3px solid var(--verde-600);
-  outline-offset: 3px;
-  border-radius: var(--radio-sm);
-}
-
-/* Texto solo para lectores de pantalla */
-.solo-lectores {
-  position: absolute; width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden;
-  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
-
-/* ---------------------------------------------------------------------------
-   2. UTILIDADES DE LAYOUT
-   --------------------------------------------------------------------------- */
-.contenedor {
-  width: 100%;
-  max-width: var(--ancho-max);
-  margin-inline: auto;
-  padding-inline: var(--padding-lateral);
-}
-
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--alto-header) + 24px); -webkit-text-size-adjust: 100%; }
+body { margin: 0; color: var(--color-texto); background: var(--color-fondo); font-family: var(--fuente); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { line-height: 1.1; text-wrap: balance; }
+a { color: var(--color-accion); text-underline-offset: 4px; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; }
+button, a, summary { -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--color-acento); color: var(--color-fondo-oscuro); }
+:focus-visible { outline: 3px solid var(--color-accion); outline-offset: 5px; border-radius: 2px; }
+.solo-lectores { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.saltar-contenido { position: fixed; top: 10px; left: 16px; z-index: 100; padding: 12px 20px; color: var(--blanco); background: var(--color-fondo-oscuro); transform: translateY(-150%); }
+.saltar-contenido:focus { transform: translateY(0); }
+.contenedor { width: 100%; max-width: var(--ancho-max); padding-inline: var(--padding-lateral); margin-inline: auto; }
 .seccion { padding-block: var(--esp-seccion); }
 .seccion--alt { background: var(--color-fondo-alt); }
+.seccion__cabecera { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: end; }
+.seccion__etiqueta { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-accion); }
+.seccion__titulo { font-size: var(--texto-3xl); font-weight: 600; letter-spacing: -0.035em; }
+.seccion__intro { max-width: 44ch; margin-top: 22px; color: var(--color-texto-suave); font-size: 1.125rem; line-height: 1.65; }
+.seccion__cabecera > .seccion__intro { margin-bottom: 4px; justify-self: end; }
 
-/* Encabezado de sección: etiqueta pequeña + título */
-.seccion__etiqueta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--esp-2);
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--verde-700);
-  margin-bottom: var(--esp-3);
-}
-.seccion__etiqueta::before {
-  content: "";
-  width: 20px; height: 2px;
-  background: var(--color-acento);
-  border-radius: var(--radio-full);
-}
-
-.seccion__titulo { font-size: var(--texto-3xl); font-weight: var(--peso-black); letter-spacing: -0.02em; }
-
-.seccion__intro {
-  margin-top: var(--esp-4);
-  max-width: var(--ancho-texto);
-  font-size: var(--texto-lg);
-  color: var(--color-texto-suave);
-}
-
-/* ---------------------------------------------------------------------------
-   3. BOTONES
-   --------------------------------------------------------------------------- */
-.boton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--esp-2);
-  padding: 0.9rem 1.5rem;
-  border: 2px solid transparent;
-  border-radius: var(--radio-md);
-  font: inherit;
-  font-weight: var(--peso-bold);
-  line-height: 1.2;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background var(--transicion), border-color var(--transicion),
-              color var(--transicion), transform var(--transicion);
-}
-.boton:active { transform: translateY(1px); }
+/* Acciones */
+.boton { display: inline-flex; justify-content: center; align-items: center; gap: 10px; min-height: 48px; padding: 13px 22px; border: 1px solid transparent; border-radius: var(--radio-sm); font: inherit; font-weight: 600; line-height: 1.25; text-decoration: none; cursor: pointer; transition: background var(--transicion), color var(--transicion), border-color var(--transicion), transform var(--transicion); }
 .boton svg { flex-shrink: 0; }
-
-/* Botón principal — verde PAC (no verde WhatsApp: la marca manda) */
-.boton--principal {
-  background: var(--color-accion);
-  color: var(--blanco);
-  box-shadow: var(--sombra-md);
-}
+.boton:active { transform: translateY(1px); }
+.boton--principal { background: var(--color-accion); color: var(--blanco); }
 .boton--principal:hover { background: var(--color-accion-hover); }
+.boton--secundario { background: transparent; color: var(--color-texto); border-color: var(--color-borde-fuerte); }
+.boton--secundario:hover { border-color: var(--color-accion); background: var(--color-fondo-verde); }
+.boton--oscuro { background: var(--color-fondo-oscuro); color: var(--color-sobre-oscuro); }
+.boton--oscuro:hover { background: var(--color-accion-hover); }
+.boton--sm { padding: 11px 18px; min-height: 44px; font-size: 0.875rem; }
+.boton--grande { min-height: 56px; padding: 17px 24px; }
+.enlace-flecha { display: inline-flex; align-items: center; gap: 18px; min-height: 44px; color: var(--color-texto); font-weight: 600; text-decoration: none; }
+.enlace-flecha svg { flex: 0 0 auto; transition: transform var(--transicion); }
+.enlace-flecha:hover { color: var(--color-accion); }
+.enlace-flecha:hover svg { transform: translateX(4px); }
 
-/* Botón secundario — para "llamar" y "cómo llegar" */
-.boton--secundario {
-  background: var(--blanco);
-  color: var(--color-texto);
-  border-color: var(--color-borde-fuerte);
-}
-.boton--secundario:hover { border-color: var(--verde-600); color: var(--verde-700); }
-
-/* Versión chica, para el header y las tarjetas */
-.boton--sm { padding: 0.6rem 1rem; font-size: var(--texto-sm); }
-
-.boton--grande { padding: 1.1rem 2rem; font-size: var(--texto-lg); }
-
-/* ---------------------------------------------------------------------------
-   4. HEADER FIJO
-   --------------------------------------------------------------------------- */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-borde);
-}
-
-.header__interior {
-  height: var(--alto-header);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--esp-4);
-}
-
-/* Bloque de logo: reproduce el orden del logo real — "PAC" + hoja, onda debajo,
-   y el nombre legal hasta abajo. */
-.logo { display: inline-flex; flex-direction: column; gap: 1px; text-decoration: none; }
-
-.logo__lockup { display: flex; align-items: center; gap: 3px; }
-.logo__nombre {
-  font-size: 1.55rem;
-  font-weight: var(--peso-black);
-  letter-spacing: -0.015em;
-  line-height: 1;
-  color: var(--pac-gris-logo);
-}
-.logo__hoja { width: 21px; height: 21px; margin-top: -2px; }
-
-/* La onda abarca todo el ancho del bloque, como en el logo original */
-.logo__onda { width: 100%; height: 6px; color: var(--color-acento); }
-
-.logo__bajada {
-  font-size: 0.55rem;
-  font-weight: var(--peso-medio);
-  letter-spacing: 0.045em;
-  line-height: 1.3;
-  color: var(--color-texto-tenue);
-  text-transform: uppercase;
-}
-/* En móvil el nombre legal no cabe — se oculta, la marca se entiende igual */
-@media (max-width: 560px) { .logo__bajada { display: none; } }
-
-.header__acciones { display: flex; align-items: center; gap: var(--esp-3); }
-
-/* El teléfono en el header solo aparece en escritorio (en móvil ya hay tel: abajo) */
-.header__tel {
-  display: none;
-  font-weight: var(--peso-medio);
-  font-variant-numeric: tabular-nums;
-  color: var(--color-texto);
-  text-decoration: none;
-}
-.header__tel:hover { color: var(--verde-700); }
-@media (min-width: 860px) { .header__tel { display: inline-flex; align-items: center; gap: var(--esp-2); } }
-
-/* ---------------------------------------------------------------------------
-   5. HERO
-   Dos columnas en escritorio: mensaje a la izquierda, ficha de datos a la derecha.
-   En móvil se apilan y la ficha queda inmediatamente debajo del CTA.
-   --------------------------------------------------------------------------- */
-.hero {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 100% 0%, var(--verde-50) 0%, transparent 55%),
-    linear-gradient(180deg, var(--gris-50) 0%, var(--blanco) 70%);
-  padding-block: clamp(2.5rem, 1rem + 7vw, 5rem) var(--esp-6);
-}
-
-.hero__grid {
-  display: grid;
-  gap: clamp(2.5rem, 1rem + 5vw, 4rem);
-  align-items: center;
-}
-@media (min-width: 940px) {
-  .hero__grid { grid-template-columns: 1.05fr 0.95fr; }
-}
-
-.hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--esp-2);
-  padding: 0.4rem 0.85rem 0.4rem 0.5rem;
-  background: var(--blanco);
-  border: 1px solid var(--verde-200);
-  border-radius: var(--radio-full);
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--verde-700);
-  box-shadow: var(--sombra-sm);
-}
-.hero__eyebrow svg { width: 18px; height: 18px; }
-
-.hero__titulo {
-  margin-top: var(--esp-5);
-  font-size: var(--texto-4xl);
-  font-weight: var(--peso-black);
-  letter-spacing: -0.03em;
-  line-height: var(--interlinea-apretada);
-}
-/* La palabra clave del titular va en verde oscuro: ancla la mirada sin gritar */
-.hero__titulo em { font-style: normal; color: var(--verde-700); }
-
-.hero__sub {
-  margin-top: var(--esp-5);
-  max-width: 48ch;
-  font-size: var(--texto-lg);
-  color: var(--color-texto-suave);
-}
-
-.hero__acciones {
-  margin-top: var(--esp-6);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--esp-3);
-}
-/* En móvil los botones ocupan todo el ancho: son el objetivo principal */
-@media (max-width: 480px) {
-  .hero__acciones .boton { width: 100%; }
-}
-
-.hero__nota {
-  margin-top: var(--esp-4);
-  font-size: var(--texto-sm);
-  color: var(--color-texto-tenue);
-}
-
-/* --- Ficha de datos: el bloque más útil de la página ---
-   Se ve como una hoja técnica / dictamen, que es el lenguaje visual del negocio. */
-.ficha {
-  background: var(--blanco);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-lg);
-  box-shadow: var(--sombra-lg);
-  overflow: hidden;
-}
-
-.ficha__encabezado {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--esp-3);
-  padding: var(--esp-4) var(--esp-5);
-  background: var(--gris-900);
-  color: var(--blanco);
-}
-.ficha__titulo {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-.ficha__sello {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.08em;
-  color: var(--verde-300);
-}
-
-.ficha__lista { margin: 0; padding: var(--esp-2) var(--esp-5) var(--esp-5); }
-
-.ficha__fila { padding-block: var(--esp-4); border-bottom: 1px solid var(--color-borde); }
-.ficha__fila:last-child { border-bottom: 0; padding-bottom: 0; }
-
-.ficha__label {
-  margin: 0;
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-texto-tenue);
-}
-.ficha__valor {
-  margin: var(--esp-1) 0 0;
-  font-size: var(--texto-base);
-  font-weight: var(--peso-medio);
-  font-variant-numeric: tabular-nums;   /* números alineados, se ve técnico */
-  color: var(--color-texto);
-}
-.ficha__valor a { color: inherit; text-decoration: none; border-bottom: 2px solid var(--verde-200); }
-.ficha__valor a:hover { border-color: var(--verde-600); color: var(--verde-700); }
-
-/* Estado "dato pendiente" — visible pero sin parecer error */
-.ficha__valor--pendiente { color: var(--color-texto-tenue); font-weight: var(--peso-normal); font-style: italic; }
-
-/* ---------------------------------------------------------------------------
-   6. ONDA SEPARADORA
-   La onda del logo, reutilizada como separador entre secciones.
-   Es el recurso gráfico que cumple la regla de "nunca texto corrido sin corte".
-   --------------------------------------------------------------------------- */
-.onda { display: block; width: 100%; height: auto; color: var(--color-acento); }
-.onda--centrada { max-width: 220px; margin: var(--esp-6) auto 0; }
-
-/* ---------------------------------------------------------------------------
-   7. SERVICIOS
-   --------------------------------------------------------------------------- */
-.servicios__grid {
-  margin-top: var(--esp-7);
-  display: grid;
-  gap: var(--esp-5);
-}
-@media (min-width: 760px) { .servicios__grid { grid-template-columns: 1fr 1fr; } }
-
-.servicio {
-  display: flex;
-  flex-direction: column;
-  padding: var(--esp-6);
-  background: var(--blanco);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-lg);
-  transition: border-color var(--transicion), box-shadow var(--transicion),
-              transform var(--transicion);
-}
-.servicio:hover {
-  border-color: var(--verde-200);
-  box-shadow: var(--sombra-lg);
-  transform: translateY(-3px);
-}
-
-.servicio__icono {
-  display: grid;
-  place-items: center;
-  width: 56px; height: 56px;
-  margin-bottom: var(--esp-5);
-  background: var(--verde-100);
-  border-radius: var(--radio-md);
-  color: var(--verde-700);
-}
-.servicio__icono svg { width: 28px; height: 28px; }
-
-.servicio__norma {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-texto-tenue);
-}
-.servicio__titulo { margin-top: var(--esp-2); font-size: var(--texto-xl); font-weight: var(--peso-bold); }
-.servicio__texto { margin-top: var(--esp-3); color: var(--color-texto-suave); }
-
-/* Empuja el botón al fondo para que las dos tarjetas queden parejas */
-.servicio__accion { margin-top: auto; padding-top: var(--esp-5); }
-
-/* ---------------------------------------------------------------------------
-   8. NORMATIVIDAD — banda de acreditaciones
-   Las NOMs son el activo de confianza del negocio, no letra chiquita.
-   Aquí se ven de un vistazo; el texto completo va en el acordeón.
-   --------------------------------------------------------------------------- */
-.acreditacion { text-align: center; }
-
-.acreditacion__badges {
-  margin-top: var(--esp-6);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--esp-3);
-}
-
-.badge {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: var(--esp-3) var(--esp-4);
-  background: var(--blanco);
-  border: 1px solid var(--color-borde);
-  border-left: 3px solid var(--color-acento);
-  border-radius: var(--radio-sm);
-  text-align: left;
-}
-.badge__codigo {
-  font-size: var(--texto-sm);
-  font-weight: var(--peso-bold);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  color: var(--color-texto);
-}
-.badge__que {
-  font-size: var(--texto-xs);
-  letter-spacing: 0.04em;
-  color: var(--color-texto-tenue);
-}
-
-/* ---------------------------------------------------------------------------
-   9. BOTÓN FLOTANTE DE WHATSAPP
-   El elemento más importante del sitio: nunca debe desaparecer.
-   Va en verde WhatsApp (no verde PAC) porque aquí gana el reconocimiento
-   instantáneo sobre la coherencia de marca.
-   --------------------------------------------------------------------------- */
-.wa-flotante {
-  position: fixed;
-  right: clamp(1rem, 3vw, 1.75rem);
-  bottom: clamp(1rem, 3vw, 1.75rem);
-  z-index: 60;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--esp-3);
-  padding: 0.85rem 1.25rem;
-  background: var(--whatsapp);
-  color: var(--blanco);
-  font-weight: var(--peso-bold);
-  text-decoration: none;
-  border-radius: var(--radio-full);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35), var(--sombra-lg);
-  transition: background var(--transicion), transform var(--transicion);
-}
-.wa-flotante:hover { background: var(--whatsapp-oscuro); transform: translateY(-2px); }
-.wa-flotante svg { width: 26px; height: 26px; flex-shrink: 0; }
-
-/* En móvil se colapsa a solo el ícono para no tapar contenido */
-@media (max-width: 620px) {
-  .wa-flotante { padding: 0.9rem; }
-  .wa-flotante .wa-flotante__texto { display: none; }
-}
-
-/* ---------------------------------------------------------------------------
-   10. DATO PENDIENTE
-   Marca en ámbar cualquier dato que todavía no nos da el cliente.
-   Es feo a propósito: así es imposible publicar sin darse cuenta.
-   Para quitar un pendiente, borra la etiqueta <span class="pendiente"> y
-   escribe el dato real.
-   --------------------------------------------------------------------------- */
-.pendiente {
-  display: inline-block;
-  padding: 0.1em 0.5em;
-  background: var(--pendiente-fondo);
-  border: 1px dashed var(--pendiente-borde);
-  border-radius: var(--radio-sm);
-  color: var(--pendiente-texto);
-  font-size: 0.92em;
-  font-style: normal;
-  font-weight: var(--peso-medio);
-}
-
-/* ---------------------------------------------------------------------------
-   11. BARRA SUPERIOR — ubicación y horario
-   No es sticky a propósito: se va con el scroll para no comer alto en móvil.
-   El header de abajo sí se queda fijo.
-   --------------------------------------------------------------------------- */
-.topbar {
-  background: var(--gris-900);
-  color: var(--gris-300);
-  font-size: var(--texto-sm);
-}
-.topbar__interior {
-  display: flex;
-  align-items: center;
-  gap: var(--esp-4);
-  min-height: 40px;
-  padding-block: var(--esp-2);
-}
-.topbar__item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--esp-2);
-  color: inherit;
-  text-decoration: none;
-  transition: color var(--transicion);
-}
-.topbar__item:hover { color: var(--verde-300); }
-.topbar__item svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--verde-300); }
-.topbar__sep { width: 1px; height: 16px; background: rgba(255,255,255,0.15); }
-
-/* En móvil solo cabe la dirección corta; el horario ya vive en la ficha del hero */
-.topbar__largo { display: none; }
-.topbar__corto { display: inline; }
-@media (min-width: 720px) {
-  .topbar__largo { display: inline; }
-  .topbar__corto { display: none; }
-}
-@media (max-width: 719px) { .topbar__horario, .topbar__sep { display: none; } }
-
-/* ---------------------------------------------------------------------------
-   12. NAVEGACIÓN DEL HEADER — solo escritorio
-   --------------------------------------------------------------------------- */
-.nav { display: none; }
-@media (min-width: 1040px) {
-  .nav { display: flex; align-items: center; gap: var(--esp-5); }
-}
-.nav a {
-  position: relative;
-  color: var(--color-texto-suave);
-  font-size: var(--texto-sm);
-  font-weight: var(--peso-medio);
-  text-decoration: none;
-  padding-block: var(--esp-2);
-  transition: color var(--transicion);
-}
-.nav a::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 2px;
-  background: var(--color-acento);
-  border-radius: var(--radio-full);
-  transform: scaleX(0);
-  transition: transform var(--transicion);
-}
-.nav a:hover { color: var(--color-texto); }
-.nav a:hover::after { transform: scaleX(1); }
-
-/* ---------------------------------------------------------------------------
-   12b. MENÚ MÓVIL
-   Hecho con <details>/<summary>: abre y cierra sin JavaScript, se navega con
-   teclado y no necesita librerías. El JS solo agrega el detalle de cerrarlo
-   al elegir una opción o al tocar fuera.
-   --------------------------------------------------------------------------- */
-.menu { position: relative; }
-@media (min-width: 1040px) { .menu { display: none; } }
-
-.menu > summary {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--color-borde-fuerte);
-  border-radius: var(--radio-md);
-  color: var(--color-texto);
-  cursor: pointer;
-  list-style: none;
-  transition: border-color var(--transicion), color var(--transicion);
-}
+/* Cabecera y marca */
+.topbar { color: var(--color-suave-oscuro); background: var(--color-fondo-oscuro); font-size: 0.75rem; }
+.topbar__interior { display: flex; justify-content: space-between; align-items: center; gap: 20px; min-height: 36px; }
+.topbar__item { min-height: 32px; display: inline-flex; align-items: center; gap: 9px; color: inherit; text-decoration: none; }
+.topbar a:hover { color: var(--color-acento); }
+.topbar__item svg { width: 13px; height: 13px; color: var(--color-acento); flex-shrink: 0; }
+.topbar__sep, .topbar__corto { display: none; }
+.header { position: sticky; top: 0; z-index: 50; background: var(--color-cristal); backdrop-filter: blur(16px); border-bottom: 1px solid var(--color-borde); }
+.header__interior { height: var(--alto-header); display: flex; justify-content: space-between; align-items: center; gap: 26px; }
+.logo { display: inline-flex; flex-direction: column; gap: 2px; width: max-content; text-decoration: none; flex: 0 0 auto; }
+.logo__lockup { display: flex; align-items: center; gap: 6px; }
+.logo__nombre { color: var(--pac-gris-logo); font-size: 2.2rem; font-weight: 800; line-height: 0.95; letter-spacing: -0.035em; }
+.logo__hoja { width: 29px; height: 29px; margin-top: -3px; }
+.logo__onda { color: var(--color-acento); width: 100%; height: 7px; }
+.logo__bajada { color: var(--color-texto-suave); font-size: 0.52rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.055em; line-height: 1.7; }
+.header__acciones { display: flex; align-items: center; gap: 16px; }
+.header__tel { display: none; align-items: center; gap: 8px; color: var(--color-texto); font-size: 0.875rem; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.nav { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 32px); }
+.nav a { position: relative; display: flex; align-items: center; min-height: 48px; color: var(--color-texto-suave); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
+.nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 3px; height: 2px; background: var(--color-accion); transform: scaleX(0); transform-origin: left; transition: transform var(--transicion); }
+.nav a:hover, .nav a[aria-current] { color: var(--color-accion); }
+.nav a:hover::after, .nav a[aria-current]::after { transform: scaleX(1); }
+.menu { display: none; position: relative; }
+.menu > summary { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--color-borde); border-radius: var(--radio-sm); cursor: pointer; list-style: none; }
 .menu > summary::-webkit-details-marker { display: none; }
-.menu > summary:hover { border-color: var(--verde-600); color: var(--verde-700); }
+.menu__cerrar, .menu[open] .menu__abrir { display: none; }
+.menu[open] .menu__cerrar { display: block; }
+.menu__panel { position: absolute; top: calc(100% + 16px); right: 0; width: min(320px, calc(100vw - 40px)); padding: 12px; background: var(--blanco); border: 1px solid var(--color-borde); box-shadow: 0 18px 48px var(--color-sombra); border-radius: var(--radio-md); }
+.menu__panel a { display: block; padding: 13px 14px; color: var(--color-texto); text-decoration: none; border-radius: var(--radio-sm); }
+.menu__panel a:hover, .menu__panel a[aria-current] { color: var(--color-accion); background: var(--color-fondo-verde); }
+.menu__panel hr { border: 0; border-top: 1px solid var(--color-borde); }
+.menu__panel .menu__tel { color: var(--color-accion); font-weight: 600; }
 
-/* Se cambia el ícono de "hamburguesa" a "cerrar" según esté abierto */
-.menu__abrir  { display: block; }
-.menu__cerrar { display: none; }
-.menu[open] > summary .menu__abrir  { display: none; }
-.menu[open] > summary .menu__cerrar { display: block; }
+/* Portada: texto editorial y lámina técnica */
+.hero { background: var(--color-papel); padding-block: clamp(40px, 4.5vw, 72px); }
+.hero__grid { display: grid; grid-template-columns: 1.03fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.hero__contenido { padding-bottom: 22px; min-width: 0; }
+.hero__eyebrow { display: flex; align-items: center; gap: 9px; color: var(--color-accion); font-size: 0.72rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.13em; }
+.hero__eyebrow > span { width: 7px; height: 7px; background: var(--color-accion); border-radius: 50%; flex-shrink: 0; }
+.hero__titulo { margin-top: 26px; font-size: var(--texto-4xl); line-height: 0.98; letter-spacing: -0.055em; font-weight: 600; }
+.hero__titulo em { font-style: normal; color: var(--color-accion); }
+.hero__sub { margin-top: 28px; max-width: 43ch; color: var(--color-texto-suave); font-size: 1.125rem; line-height: 1.6; }
+.hero__sub strong { font-weight: 600; color: var(--color-texto); }
+.hero__acciones { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; margin-top: 32px; }
+.hero__acciones .enlace-flecha { font-size: 0.875rem; gap: 12px; }
+.hero__nota { display: flex; gap: 8px; align-items: center; margin-top: 18px; color: var(--color-texto-suave); font-size: 0.78rem; }
+.hero__nota svg { flex-shrink: 0; }
+.hero__visual { min-width: 0; }
+.lamina { position: relative; overflow: hidden; background: var(--color-fondo-oscuro); color: var(--color-sobre-oscuro); border-radius: var(--radio-sm); }
+.lamina__cabecera { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-inline: 26px; padding-block: 23px; border-bottom: 1px solid var(--color-linea-oscura); font-size: 0.7rem; }
+.lamina__cabecera > span:first-child { display: flex; align-items: center; gap: 9px; }
+.lamina__cabecera svg { color: var(--color-acento); }
+.lamina__folio { font-size: 0.62rem; letter-spacing: 0.1em; color: var(--color-suave-oscuro); }
+.lamina__dibujo { position: relative; padding-block: 26px 22px; background-image: linear-gradient(var(--color-reticula) 1px, transparent 1px), linear-gradient(90deg, var(--color-reticula) 1px, transparent 1px); background-size: 35px 35px; }
+.lamina__rotulo { position: absolute; top: 22px; left: 26px; color: var(--color-suave-oscuro); font-size: 0.75rem; }
+.lamina__dibujo img { width: 100%; height: auto; margin-top: 18px; }
+.lamina__referencia { display: block; padding-inline: 26px; color: var(--color-suave-oscuro); font-size: 0.55rem; letter-spacing: 0.15em; }
+.lamina__pie { margin-inline: 26px; padding-block: 22px 27px; display: flex; align-items: end; justify-content: space-between; gap: 24px; border-top: 1px solid var(--color-linea-oscura); }
+.lamina__etiqueta { display: block; color: var(--color-suave-oscuro); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.lamina__pie p { font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.08; letter-spacing: -0.025em; font-weight: 600; }
+.lamina__pie > svg { color: var(--color-acento); }
+.hero__pie-visual { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; font-size: 0.68rem; color: var(--color-texto-suave); }
+.datos-rapidos { border-block: 1px solid var(--color-borde); background: var(--blanco); }
+.datos-rapidos__grid { display: grid; grid-template-columns: 1.05fr 0.85fr 1.1fr; padding-block: 27px; }
+.datos-rapidos__item { display: flex; align-items: center; gap: 17px; padding-inline: 30px; border-right: 1px solid var(--color-borde); color: var(--color-texto); text-decoration: none; min-width: 0; }
+.datos-rapidos__item:first-child { padding-left: 0; }
+.datos-rapidos__item:last-child { padding-right: 0; border: 0; }
+.datos-rapidos__item > svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--color-accion); }
+.datos-rapidos__item span, .datos-rapidos__item strong { display: block; }
+.datos-rapidos__item span { font-size: 0.75rem; color: var(--color-texto-suave); }
+.datos-rapidos__item strong { font-weight: 600; font-size: 0.95rem; margin-top: 2px; }
+.datos-rapidos__item .datos-rapidos__flecha { width: 18px; margin-left: auto; }
+.datos-rapidos a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
 
-.menu__panel {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  z-index: 70;
-  min-width: 232px;
-  padding: var(--esp-2);
-  background: var(--blanco);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-lg);
-  box-shadow: var(--sombra-lg);
-}
-.menu__panel a {
-  display: block;
-  padding: 0.7rem 0.9rem;
-  border-radius: var(--radio-sm);
-  color: var(--color-texto);
-  font-weight: var(--peso-medio);
-  text-decoration: none;
-  transition: background var(--transicion), color var(--transicion);
-}
-.menu__panel a:hover { background: var(--verde-50); color: var(--verde-700); }
+/* Servicios */
+.servicios__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 44px; }
+.servicio { display: flex; flex-direction: column; min-width: 0; padding: clamp(26px, 3vw, 42px); border: 1px solid var(--color-linea-verde); background: var(--color-papel); border-radius: var(--radio-sm); transition: border-color var(--transicion), box-shadow var(--transicion); }
+.servicio:nth-child(2) { background: var(--color-fondo); }
+.servicio:hover { border-color: var(--color-accion); box-shadow: 0 6px 24px var(--color-sombra); }
+.servicio__cabecera { display: flex; justify-content: space-between; align-items: start; margin-bottom: 44px; }
+.servicio__icono { display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid var(--color-linea-verde); border-radius: var(--radio-sm); color: var(--color-accion); }
+.servicio__icono svg { width: 30px; height: 30px; }
+.servicio__numero { font-size: 3.75rem; line-height: 1; letter-spacing: -0.07em; font-weight: 400; color: var(--color-linea-verde); }
+.servicio__norma { color: var(--color-accion); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.075em; }
+.servicio__titulo { margin-top: 13px; max-width: 20ch; font-size: clamp(1.65rem, 2.3vw, 2.15rem); font-weight: 600; letter-spacing: -0.025em; }
+.servicio__texto { margin-top: 18px; color: var(--color-texto-suave); line-height: 1.7; max-width: 49ch; }
+.servicio__accion { margin-top: auto; padding-top: 32px; }
+.servicio__accion a { justify-content: space-between; width: 100%; padding-top: 18px; border-top: 1px solid var(--color-borde); color: var(--color-accion); }
 
-/* Separador antes del teléfono, que es acción y no navegación */
-.menu__panel hr { margin: var(--esp-2) 0; border: 0; border-top: 1px solid var(--color-borde); }
-.menu__panel .menu__tel { color: var(--verde-700); font-weight: var(--peso-bold); font-variant-numeric: tabular-nums; }
+/* Proceso */
+.pasos { display: grid; grid-template-columns: repeat(4, 1fr); counter-reset: paso; gap: 28px; margin-top: 56px; }
+.paso { position: relative; border-top: 1px solid var(--color-linea-verde); padding-top: 24px; counter-increment: paso; }
+.paso::before { content: '0' counter(paso); display: inline-grid; place-items: center; width: 44px; height: 44px; margin-bottom: 25px; background: var(--color-menta); color: var(--color-accion); border-radius: 50%; font-size: 0.9rem; font-weight: 600; }
+.paso__titulo { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; }
+.paso__texto { margin-top: 12px; color: var(--color-texto-suave); font-size: 0.95rem; line-height: 1.65; }
+.requisitos { display: flex; align-items: center; gap: 24px; padding: 28px 32px; margin-top: 52px; border: 1px solid var(--color-linea-verde); border-radius: var(--radio-sm); background: var(--blanco); }
+.requisitos__icono { color: var(--color-accion); }
+.requisitos__contenido { flex: 1; }
+.requisitos h3 { font-size: 1.3rem; font-weight: 600; }
+.requisitos .servicio__texto { margin-top: 8px; font-size: 0.9rem; max-width: 58ch; }
+.requisitos .boton { flex-shrink: 0; }
 
-/* ---------------------------------------------------------------------------
-   13. PROCESO — pasos numerados
-   El número va grande y en verde claro detrás del contenido: es editorial,
-   corta el bloque de texto y se lee de un vistazo.
-   --------------------------------------------------------------------------- */
-.pasos {
-  margin-top: var(--esp-7);
-  display: grid;
-  gap: var(--esp-5);
-  counter-reset: paso;
-}
-@media (min-width: 700px)  { .pasos { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .pasos { grid-template-columns: repeat(4, 1fr); } }
+/* Compromiso */
+#compromiso { background: var(--color-fondo-oscuro); color: var(--color-sobre-oscuro); padding-block: clamp(50px, 6vw, 88px); }
+.compromiso__grid { display: grid; grid-template-columns: 0.6fr 1.4fr; gap: 80px; align-items: center; }
+.compromiso__marca { display: flex; align-items: center; flex-direction: column; gap: 28px; border-right: 1px solid var(--color-linea-oscura); padding: 24px 50px 24px 0; }
+.compromiso__marca img { width: 135px; height: 135px; }
+.compromiso__marca span { color: var(--color-suave-oscuro); font-size: 0.58rem; letter-spacing: 0.15em; white-space: nowrap; }
+.cita { margin: 0; }
+.cita .seccion__etiqueta { color: var(--color-acento); margin-bottom: 22px; }
+.cita__texto { max-width: 28ch; font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1.17; letter-spacing: -0.025em; font-weight: 400; }
+.cita__texto strong { color: var(--color-acento); font-weight: 600; }
+.cita__pie { max-width: 65ch; color: var(--color-suave-oscuro); font-size: 0.95rem; line-height: 1.7; margin-top: 22px; }
+.cita .onda { display: none; }
 
-.paso {
-  position: relative;
-  padding: var(--esp-5) var(--esp-5) var(--esp-6);
-  background: var(--blanco);
-  border: 1px solid var(--color-borde);
-  border-radius: var(--radio-lg);
-  overflow: hidden;
-  counter-increment: paso;
-}
-.paso::before {
-  content: counter(paso, decimal-leading-zero);
-  position: absolute;
-  top: -0.35em; right: 0.1em;
-  font-size: 5.5rem;
-  font-weight: var(--peso-black);
-  line-height: 1;
-  color: var(--verde-100);
-  pointer-events: none;
-}
-.paso__titulo { position: relative; font-size: var(--texto-lg); font-weight: var(--peso-bold); }
-.paso__texto  { position: relative; margin-top: var(--esp-2); font-size: var(--texto-sm); color: var(--color-texto-suave); }
-
-/* ---------------------------------------------------------------------------
-   14. PULL QUOTE — el compromiso de imparcialidad
-   --------------------------------------------------------------------------- */
-.cita {
-  position: relative;
-  max-width: 46rem;
-  margin: 0 auto;
-  padding: var(--esp-7) var(--esp-5) 0;
-  text-align: center;
-}
-.cita__texto {
-  margin: 0;
-  font-size: var(--texto-2xl);
-  font-weight: var(--peso-medio);
-  line-height: 1.4;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-}
-.cita__texto strong { font-weight: var(--peso-black); color: var(--verde-700); }
-.cita__pie {
-  margin-top: var(--esp-5);
-  font-size: var(--texto-sm);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-texto-tenue);
-}
-
-/* ---------------------------------------------------------------------------
-   15. ACORDEÓN (normatividad y preguntas frecuentes)
-   Usa <details>/<summary> nativo: funciona sin JavaScript, es accesible con
-   teclado y Google puede indexar el contenido aunque esté colapsado.
-   --------------------------------------------------------------------------- */
-.acordeon { margin-top: var(--esp-6); border-top: 1px solid var(--color-borde); }
-
+/* Normas y acordeones */
+#normatividad > .contenedor { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+.acreditacion .seccion__intro { font-size: 1rem; }
+.acreditacion__badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.badge { display: flex; flex-direction: column; gap: 4px; padding: 11px 14px; background: var(--blanco); border: 1px solid var(--color-linea-verde); border-radius: var(--radio-sm); }
+.badge__codigo { font-size: 0.7rem; color: var(--color-texto); font-weight: 600; letter-spacing: 0.01em; }
+.badge__que { color: var(--color-texto-suave); font-size: 0.7rem; }
+.acordeon { border-top: 1px solid var(--color-borde); }
 .acordeon details { border-bottom: 1px solid var(--color-borde); }
-
-.acordeon summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--esp-4);
-  padding: var(--esp-5) 0;
-  font-size: var(--texto-lg);
-  font-weight: var(--peso-bold);
-  cursor: pointer;
-  list-style: none;              /* quita el triangulito por defecto */
-  transition: color var(--transicion);
-}
+.acordeon summary { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 76px; padding: 22px 0; list-style: none; font-size: 1.05rem; line-height: 1.4; font-weight: 600; cursor: pointer; transition: color var(--transicion); }
 .acordeon summary::-webkit-details-marker { display: none; }
-.acordeon summary:hover { color: var(--verde-700); }
-
-/* Chevron propio, que gira al abrir */
-.acordeon summary::after {
-  content: "";
-  flex-shrink: 0;
-  width: 11px; height: 11px;
-  border-right: 2.5px solid var(--verde-600);
-  border-bottom: 2.5px solid var(--verde-600);
-  transform: rotate(45deg) translate(-2px, -2px);
-  transition: transform 220ms ease;
-}
-.acordeon details[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
-
-.acordeon__cuerpo {
-  padding-bottom: var(--esp-5);
-  max-width: var(--ancho-texto);
-  color: var(--color-texto-suave);
-}
-.acordeon__cuerpo p + p { margin-top: var(--esp-4); }
+.acordeon summary::after { content: ''; background-image: linear-gradient(currentColor, currentColor), linear-gradient(currentColor, currentColor); background-size: 10px 1px, 1px 10px; background-position: center; background-repeat: no-repeat; display: grid; place-items: center; flex: 0 0 28px; height: 28px; font-size: 1.4rem; font-weight: 400; color: var(--color-accion); border: 1px solid var(--color-linea-verde); border-radius: 50%; line-height: 1; }
+.acordeon details[open] summary::after { background-color: var(--color-menta); background-size: 10px 1px, 0 0; }
+.acordeon summary:hover, .acordeon details[open] summary { color: var(--color-accion); }
+.acordeon__cuerpo { padding: 0 38px 24px 0; color: var(--color-texto-suave); font-size: 0.95rem; line-height: 1.75; }
+.acordeon__cuerpo p + p { margin-top: 16px; }
 .acordeon__cuerpo strong { color: var(--color-texto); }
+.acordeon__cuerpo a { font-weight: 600; }
+.acordeon--normas { margin-top: 8px; }
+.lista-normas { padding-left: 18px; margin-block: 16px; }
+.lista-normas li { margin-top: 7px; }
+.lista-normas li::marker { color: var(--color-accion); }
+.preguntas__grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: start; }
+.preguntas__intro { position: sticky; top: calc(var(--alto-header) + 36px); }
+.preguntas__intro .seccion__intro { max-width: 30ch; }
+.preguntas__contacto { margin-top: 24px; font-size: 0.95rem; color: var(--color-accion); }
 
-/* Lista de normas dentro del acordeón */
-.lista-normas { margin: var(--esp-4) 0 0; padding: 0; list-style: none; display: grid; gap: var(--esp-2); }
-.lista-normas li {
-  position: relative;
-  padding-left: var(--esp-5);
-  font-variant-numeric: tabular-nums;
-  color: var(--color-texto);
-}
-.lista-normas li::before {
-  content: "";
-  position: absolute; left: 0; top: 0.65em;
-  width: 8px; height: 8px;
-  background: var(--color-acento);
-  border-radius: 2px;
-}
-
-/* Animación de apertura donde el navegador la soporta (Chrome/Edge modernos).
-   Donde no, simplemente abre de golpe: no se rompe nada. */
-@supports (interpolate-size: allow-keywords) {
-  :root { interpolate-size: allow-keywords; }
-  .acordeon details::details-content {
-    height: 0;
-    overflow: hidden;
-    transition: height 280ms ease, content-visibility 280ms allow-discrete;
-  }
-  .acordeon details[open]::details-content { height: auto; }
-}
-
-/* ---------------------------------------------------------------------------
-   16. UBICACIÓN Y MAPA
-   El mapa NO se carga al abrir la página: primero se ve un panel propio y
-   ligero, y el mapa real de Google se inserta hasta que el usuario da clic.
-   Así la página carga rápido en datos móviles y no se cargan cookies de
-   terceros a quien nunca abrió el mapa.
-   --------------------------------------------------------------------------- */
-.ubicacion__grid { margin-top: var(--esp-7); display: grid; gap: var(--esp-6); align-items: start; }
-/* La columna izquierda necesita ~510px para que los botones de Google Maps y
-   Waze quepan en un solo renglón. De ahí la proporción. */
-@media (min-width: 900px) { .ubicacion__grid { grid-template-columns: 1.1fr 1.15fr; } }
-
-.ubicacion__datos { display: grid; gap: var(--esp-5); }
-
-.dato { display: flex; gap: var(--esp-4); }
-.dato__icono {
-  display: grid; place-items: center;
-  flex-shrink: 0;
-  width: 42px; height: 42px;
-  background: var(--verde-100);
-  color: var(--verde-700);
-  border-radius: var(--radio-md);
-}
-.dato__icono svg { width: 20px; height: 20px; }
-.dato__label {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-texto-tenue);
-}
-.dato__valor { margin-top: 2px; font-weight: var(--peso-medio); }
-.dato__valor a { color: inherit; text-decoration: none; border-bottom: 2px solid var(--verde-200); }
-.dato__valor a:hover { color: var(--verde-700); border-color: var(--verde-600); }
-
-.ubicacion__botones { display: flex; flex-wrap: wrap; gap: var(--esp-3); margin-top: var(--esp-2); }
-
-/* --- Contenedor del mapa --- */
-/* OJO: nada de min-height aquí. Con aspect-ratio, un min-height obliga al
-   navegador a ensanchar la caja para respetar la proporción, y eso desborda
-   la pantalla en móvil. La proporción sola ya define el alto. */
-.mapa {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  border-radius: var(--radio-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-borde);
-  background: var(--gris-900);
-}
-@media (min-width: 640px) { .mapa { aspect-ratio: 4 / 3; } }
-@media (min-width: 900px) { .mapa { aspect-ratio: 16 / 11; } }
-
-.mapa iframe { width: 100%; height: 100%; border: 0; display: block; }
-
-/* Panel previo (facade). Es un botón: todo el bloque es clicable. */
-.mapa__facade {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: var(--esp-4);
-  width: 100%;
-  padding: var(--esp-6);
-  border: 0;
-  background: var(--gris-900);
-  color: var(--blanco);
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-}
-/* Cuadrícula tenue de fondo: sugiere un plano sin fingir un mapa real.
-   Va en rgba() a mano porque necesita transparencia: es el verde del logo
-   (--pac-verde-logo, #A7C776) en sus componentes R,G,B. Si cambia ese token,
-   cambia también estos tres números y los del .mapa__pin de aquí abajo. */
-.mapa__facade::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(167, 199, 118, 0.10) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(167, 199, 118, 0.10) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(circle at 50% 45%, #000 15%, transparent 72%);
-}
+/* Visita y mapa bajo demanda */
+.ubicacion__grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; margin-top: 48px; align-items: stretch; }
+.ubicacion__datos { display: grid; gap: 24px; padding-block: 8px; }
+.dato { display: flex; align-items: start; gap: 16px; }
+.dato__icono { color: var(--color-accion); padding-top: 2px; flex-shrink: 0; }
+.dato__icono svg { width: 21px; height: 21px; }
+.dato__label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--color-texto-suave); }
+.dato__valor { margin-top: 6px; font-size: 1rem; font-weight: 600; line-height: 1.55; }
+.dato__valor a { color: var(--color-texto); }
+.dato__valor a:hover { color: var(--color-accion); }
+.ubicacion__botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 3px; }
+.ubicacion__botones .boton { padding-inline: 16px; font-size: 0.875rem; }
+.mapa { position: relative; overflow: hidden; min-height: 440px; border-radius: var(--radio-sm); background: var(--color-menta); border: 1px solid var(--color-linea-verde); }
+.mapa iframe { display: block; width: 100%; height: 100%; min-height: 440px; border: 0; }
+.mapa:focus-within { outline: 3px solid var(--color-accion); outline-offset: 5px; }
+.mapa--cargado { display: flex; flex-direction: column; }
+.mapa--cargado iframe { flex: 1; min-height: 360px; }
+.mapa__alternativa { display: flex; justify-content: center; align-items: center; min-height: 48px; padding: 12px; background: var(--color-papel); font-size: 0.85rem; font-weight: 600; }
+.mapa__alternativa:focus-visible { outline-offset: -4px; }
+.mapa__estado { position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); width: min(80%, 300px); padding: 16px 20px; background: var(--color-papel); border: 1px solid var(--color-linea-verde); border-radius: var(--radio-sm); color: var(--color-texto-suave); text-align: center; font-size: 0.9rem; pointer-events: none; }
+.mapa__facade { position: relative; width: 100%; height: 100%; min-height: 440px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; padding: 65px 28px 40px; background: var(--color-menta); color: var(--color-texto); border: 0; cursor: pointer; overflow: hidden; }
+.mapa__facade::before { content: ''; position: absolute; inset: -80%; background-image: linear-gradient(90deg, transparent 48%, var(--color-papel) 48%, var(--color-papel) 51%, transparent 51%), linear-gradient(0deg, transparent 47%, var(--color-papel) 47%, var(--color-papel) 51%, transparent 51%); background-size: 148px 130px; transform: rotate(-28deg); opacity: 0.85; }
 .mapa__facade > * { position: relative; }
+.mapa__facade .mapa__region { position: absolute; top: 25px; left: 26px; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--color-texto-suave); }
+.mapa__pin { display: grid; place-items: center; width: 66px; height: 66px; margin-bottom: 3px; color: var(--color-sobre-oscuro); background: var(--color-fondo-oscuro); border: 6px solid var(--color-papel); border-radius: 50%; box-shadow: 0 8px 22px var(--color-sombra); }
+.mapa__pin svg { width: 25px; height: 25px; }
+.mapa__titulo { padding: 2px 10px; background: var(--color-menta); font-size: 1.7rem; font-weight: 600; letter-spacing: -0.025em; }
+.mapa__dir { max-width: 34ch; padding: 4px 8px; background: var(--color-menta); font-size: 0.875rem; line-height: 1.5; }
+.mapa__cta { display: inline-flex; align-items: center; gap: 16px; margin-top: 5px; padding: 13px 18px; background: var(--color-fondo-oscuro); color: var(--blanco); border-radius: var(--radio-sm); font-size: 0.875rem; font-weight: 600; transition: background var(--transicion); }
+.mapa__facade:hover .mapa__cta { background: var(--color-accion); }
+.mapa__nota { padding: 2px 8px; background: var(--color-menta); font-size: 0.65rem; color: var(--color-texto-suave); }
 
-.mapa__pin {
-  display: grid; place-items: center;
-  width: 58px; height: 58px;
-  background: var(--verde-700);
-  border-radius: var(--radio-full);
-  box-shadow: 0 0 0 10px rgba(167, 199, 118, 0.16), 0 0 0 22px rgba(167, 199, 118, 0.07);
+/* Cierre y pie */
+.contacto-final { background: var(--color-acento); padding-block: 60px; }
+.contacto-final__interior { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.contacto-final .seccion__etiqueta { color: var(--color-fondo-oscuro); margin-bottom: 17px; }
+.contacto-final h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); font-weight: 600; letter-spacing: -0.035em; }
+.contacto-final__accion { flex-shrink: 0; text-align: center; }
+.contacto-final__accion p { margin-top: 13px; font-size: 0.8rem; color: var(--color-fondo-oscuro); }
+.footer { background: var(--color-fondo-oscuro); color: var(--color-suave-oscuro); padding-top: 65px; }
+.footer__grid { display: grid; grid-template-columns: 1.05fr 1fr 0.6fr; gap: 70px; }
+.footer .logo__nombre { color: var(--color-sobre-oscuro); }
+.footer .logo__bajada { color: var(--color-suave-oscuro); }
+.footer__desc { margin-top: 22px; max-width: 35ch; font-size: 0.875rem; line-height: 1.75; }
+.footer__titulo { font-size: 0.7rem; color: var(--color-sobre-oscuro); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 24px; }
+.footer__lista { display: grid; gap: 12px; list-style: none; margin: 0; padding: 0; font-size: 0.875rem; }
+.footer__lista a { display: inline-flex; align-items: center; min-height: 32px; color: var(--color-suave-oscuro); text-decoration: none; }
+.footer__lista a:hover { color: var(--color-acento); text-decoration: underline; }
+.footer__legal { display: flex; justify-content: space-between; gap: 24px; margin-top: 54px; padding-block: 24px; border-top: 1px solid var(--color-linea-oscura); color: var(--color-suave-oscuro); font-size: 0.7rem; padding-right: 150px; }
+.footer :focus-visible, #compromiso :focus-visible { outline-color: var(--color-acento); }
+.wa-flotante { position: fixed; right: 24px; bottom: 22px; z-index: 40; display: inline-flex; align-items: center; gap: 10px; padding: 15px 20px; background: var(--color-fondo-oscuro); color: var(--color-sobre-oscuro); border: 1px solid var(--color-linea-oscura); border-radius: 50px; font-size: 0.85rem; font-weight: 600; text-decoration: none; box-shadow: 0 5px 22px var(--color-sombra); transition: transform var(--transicion), background var(--transicion); }
+.wa-flotante svg { width: 23px; height: 23px; flex-shrink: 0; color: var(--color-acento); }
+.wa-flotante:hover { background: var(--color-accion-hover); transform: translateY(-3px); }
+
+/* Apariciones: el contenido permanece visible sin JavaScript. */
+html.reveal-ready .revelar { opacity: 0; transform: translateY(14px); transition: opacity 500ms ease, transform 500ms ease; }
+html.reveal-ready .revelar.visible { opacity: 1; transform: none; }
+
+/* Ajustes responsivos */
+@media (min-width: 1200px) { .header__tel { display: inline-flex; } }
+@media (max-width: 1099px) {
+  :root { --alto-header: 78px; }
+  .nav { display: none; }
+  .menu { display: block; }
+  .hero__grid { gap: 32px; }
+  .hero__titulo { font-size: clamp(3rem, 5.65vw, 4.5rem); }
+  .hero__acciones { gap: 12px 18px; }
+  .lamina__folio { display: none; }
+  .datos-rapidos__item { padding-inline: 22px; gap: 12px; }
+  .datos-rapidos__item strong { font-size: 0.875rem; }
+  .datos-rapidos__flecha { display: none; }
+  #normatividad > .contenedor, .preguntas__grid { gap: 45px; }
+  .ubicacion__grid { gap: 32px; }
+  .compromiso__grid { gap: 48px; }
+  .footer__grid { gap: 40px; }
 }
-.mapa__pin svg { width: 26px; height: 26px; color: var(--blanco); }
-
-.mapa__titulo { font-size: var(--texto-lg); font-weight: var(--peso-bold); }
-.mapa__dir { max-width: 30ch; font-size: var(--texto-sm); color: var(--gris-300); }
-.mapa__cta {
-  display: inline-flex; align-items: center; gap: var(--esp-2);
-  padding: 0.7rem 1.25rem;
-  background: var(--blanco);
-  color: var(--gris-900);
-  border-radius: var(--radio-md);
-  font-weight: var(--peso-bold);
-  font-size: var(--texto-sm);
-  transition: background var(--transicion);
+@media (max-width: 799px) {
+  .topbar__horario, .topbar__largo { display: none; }
+  .topbar__corto { display: inline; }
+  .topbar__interior { min-height: 32px; }
+  .hero__grid { grid-template-columns: 1fr; gap: 36px; }
+  .hero__contenido { padding-bottom: 0; }
+  .hero__titulo { font-size: clamp(3.1rem, 8vw, 4.7rem); }
+  .hero__titulo em br { display: none; }
+  .hero__sub { max-width: 48ch; }
+  .hero__visual { max-width: 590px; width: 100%; justify-self: center; }
+  .lamina__dibujo { padding-block: 22px 16px; }
+  .lamina__dibujo img { max-height: 320px; object-fit: contain; }
+  .lamina__pie { padding-block: 18px; }
+  .lamina__pie p { font-size: 1.65rem; }
+  .lamina__pie br { display: none; }
+  .lamina__pie > svg { width: 32px; height: 32px; }
+  .lamina__folio { display: inline; }
+  .datos-rapidos__grid { grid-template-columns: 1fr 1fr; }
+  .datos-rapidos__item:nth-child(2) { border: 0; padding-right: 0; }
+  .datos-rapidos__item:last-child { display: none; }
+  .seccion__cabecera { grid-template-columns: 1fr; gap: 20px; }
+  .seccion__cabecera > .seccion__intro { margin: 0; justify-self: start; max-width: 52ch; }
+  .servicios__grid { gap: 16px; margin-top: 32px; }
+  .servicio { padding: 26px; }
+  .servicio__cabecera { margin-bottom: 30px; }
+  .servicio__titulo { font-size: 1.7rem; }
+  .servicio__accion a { font-size: 0.9rem; gap: 12px; }
+  .pasos { grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 36px; }
+  .requisitos { flex-wrap: wrap; gap: 20px; }
+  .requisitos__contenido { flex-basis: calc(100% - 50px); }
+  .requisitos .boton { margin-left: 48px; }
+  .compromiso__grid { grid-template-columns: 1fr; gap: 30px; }
+  .compromiso__marca { display: none; }
+  .cita__texto { max-width: 32ch; }
+  #normatividad > .contenedor { grid-template-columns: 1fr; gap: 32px; }
+  .acreditacion .seccion__intro { max-width: 56ch; }
+  .preguntas__grid { grid-template-columns: 1fr; gap: 32px; }
+  .preguntas__intro { position: static; }
+  .preguntas__intro .seccion__intro { max-width: 45ch; }
+  .preguntas__contacto { margin-top: 16px; }
+  .ubicacion__grid { grid-template-columns: 1fr; }
+  .mapa, .mapa iframe, .mapa__facade { min-height: 380px; }
+  .contacto-final__interior { align-items: start; flex-direction: column; gap: 28px; }
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .footer__grid > div:first-child { grid-column: 1 / -1; }
+  .footer__desc { max-width: 52ch; }
+  .footer__legal { flex-direction: column; gap: 8px; }
 }
-.mapa__facade:hover .mapa__cta { background: var(--verde-300); }
-
-/* ---------------------------------------------------------------------------
-   17. FOOTER
-   --------------------------------------------------------------------------- */
-.footer {
-  background: var(--gris-900);
-  color: var(--gris-300);
-  /* El extra abajo es para que el botón flotante de WhatsApp no tape
-     la última línea del footer. */
-  padding-block: var(--esp-9) calc(var(--esp-6) + 4rem);
+@media (max-width: 479px) {
+  :root { --alto-header: 72px; --padding-lateral: 22px; }
+  .logo__nombre { font-size: 1.85rem; }
+  .logo__hoja { width: 25px; height: 25px; }
+  .logo__bajada { font-size: 0.44rem; letter-spacing: 0; }
+  .header__interior { gap: 14px; }
+  .header__acciones { gap: 10px; }
+  .header__acciones .boton { padding: 10px 13px; }
+  .hero { padding-block: 36px; }
+  .hero__eyebrow { font-size: 0.6rem; letter-spacing: 0.09em; }
+  .hero__titulo { font-size: clamp(2.85rem, 12vw, 3.8rem); margin-top: 22px; }
+  .hero__sub { font-size: 1rem; margin-top: 24px; }
+  .hero__acciones { margin-top: 25px; gap: 9px; }
+  .hero__acciones .boton { width: 100%; }
+  .hero__acciones .enlace-flecha { justify-content: center; width: 100%; }
+  .hero__nota { font-size: 0.7rem; align-items: start; margin-top: 9px; }
+  .lamina__cabecera { margin-inline: 20px; padding-block: 17px; font-size: 0.65rem; }
+  .lamina__folio { display: none; }
+  .lamina__rotulo { left: 20px; font-size: 0.68rem; }
+  .lamina__referencia { padding-inline: 20px; font-size: 0.5rem; }
+  .lamina__pie { margin-inline: 20px; }
+  .lamina__pie p { font-size: 1.4rem; }
+  .lamina__etiqueta { font-size: 0.55rem; }
+  .hero__pie-visual { font-size: 0.59rem; }
+  .datos-rapidos__grid { grid-template-columns: 1fr; gap: 18px; padding-block: 24px; }
+  .datos-rapidos__item { padding: 0; border: 0; gap: 14px; }
+  .datos-rapidos__item strong { font-size: 0.95rem; }
+  .datos-rapidos__item .datos-rapidos__flecha { display: block; }
+  .seccion__etiqueta { font-size: 0.63rem; margin-bottom: 19px; }
+  .seccion__intro { font-size: 1rem; }
+  .servicios__grid { grid-template-columns: 1fr; gap: 20px; }
+  .servicio__cabecera { margin-bottom: 32px; }
+  .servicio__titulo { max-width: 19ch; font-size: 1.9rem; }
+  .servicio__texto { font-size: 0.95rem; }
+  .servicio__accion { padding-top: 25px; }
+  .pasos { gap: 30px 20px; }
+  .paso { padding-top: 20px; }
+  .paso::before { margin-bottom: 20px; }
+  .paso__titulo { font-size: 1.15rem; }
+  .paso__texto { font-size: 0.875rem; }
+  .requisitos { padding: 24px; margin-top: 36px; }
+  .requisitos__icono { display: none; }
+  .requisitos__contenido { flex-basis: 100%; }
+  .requisitos .boton { margin: 0; width: 100%; }
+  .acordeon summary { font-size: 1rem; gap: 16px; min-height: 73px; }
+  .acordeon__cuerpo { padding-right: 12px; }
+  .acreditacion__badges { gap: 8px; }
+  .badge { padding: 10px; }
+  .badge__codigo { font-size: 0.63rem; }
+  .ubicacion__grid { margin-top: 32px; gap: 28px; }
+  .ubicacion__botones .boton { width: 100%; }
+  .mapa, .mapa iframe, .mapa__facade { min-height: 365px; }
+  .mapa__facade { padding-inline: 20px; }
+  .contacto-final { padding-block: 45px; }
+  .contacto-final__accion, .contacto-final .boton { width: 100%; }
+  .footer { padding-top: 45px; }
+  .footer__grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer__titulo { margin-bottom: 16px; }
+  .footer__legal { padding: 22px 60px 32px 0; margin-top: 36px; }
+  .wa-flotante { bottom: max(16px, env(safe-area-inset-bottom)); right: 16px; padding: 15px; }
+  .wa-flotante__texto { display: none; }
+  .wa-flotante svg { width: 24px; height: 24px; }
 }
-.footer__grid { display: grid; gap: var(--esp-7); }
-@media (min-width: 760px)  { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
-
-.footer .logo__nombre { color: var(--blanco); }
-.footer .logo__bajada { color: var(--gris-500); }
-
-.footer__desc { margin-top: var(--esp-4); max-width: 34ch; font-size: var(--texto-sm); color: var(--gris-500); }
-
-.footer__titulo {
-  font-size: var(--texto-xs);
-  font-weight: var(--peso-bold);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blanco);
-  margin-bottom: var(--esp-4);
-}
-.footer__lista { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--esp-3); font-size: var(--texto-sm); }
-.footer__lista a { color: var(--gris-300); text-decoration: none; transition: color var(--transicion); }
-.footer__lista a:hover { color: var(--verde-300); }
-
-.footer__legal {
-  margin-top: var(--esp-8);
-  padding-top: var(--esp-5);
-  border-top: 1px solid rgba(255,255,255,0.10);
-  display: flex; flex-wrap: wrap; gap: var(--esp-3) var(--esp-5);
-  justify-content: space-between;
-  font-size: var(--texto-xs);
-  color: var(--gris-500);
-}
-
-/* ---------------------------------------------------------------------------
-   18. APARICIÓN AL HACER SCROLL
-   Sutil a propósito: 14px de desplazamiento y medio segundo. Si se nota
-   demasiado, se ve barato. La clase .js la pone el propio HTML, así que si
-   el JavaScript falla el contenido igual se ve.
-   --------------------------------------------------------------------------- */
-html.js .revelar { opacity: 0; transform: translateY(14px); }
-html.js .revelar.visible {
-  opacity: 1;
-  transform: none;
-  transition: opacity 520ms ease, transform 520ms cubic-bezier(0.22, 0.61, 0.36, 1);
+@media (max-width: 359px) {
+  :root { --padding-lateral: 18px; }
+  .header__acciones { gap: 7px; }
+  .header__acciones .boton { font-size: 0.78rem; padding-inline: 10px; }
+  .hero__titulo { font-size: 2.8rem; }
+  .pasos { grid-template-columns: 1fr; }
+  .lamina__pie > svg { width: 25px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html.js .revelar { opacity: 1; transform: none; }
+  html { scroll-behavior: auto; }
+  html.reveal-ready .revelar { opacity: 1; transform: none; transition: none; }
 }
-
-/* ---------------------------------------------------------------------------
-   19. BOTÓN FLOTANTE — espacio al final del body
-   --------------------------------------------------------------------------- */
-body { padding-bottom: 0; }
-
-/* ---------------------------------------------------------------------------
-   20. IMPRESIÓN
-   Alguien va a imprimir esta página para llevar la dirección. Que salga bien.
-   --------------------------------------------------------------------------- */
 @media print {
-  .topbar, .nav, .header__acciones, .wa-flotante, .mapa, .acordeon summary::after { display: none !important; }
-  .header { position: static; border-bottom: 2px solid #000; }
-  body { padding-bottom: 0; color: #000; }
-  .seccion, .hero { padding-block: 1.2rem; break-inside: avoid; }
-  .ficha, .servicio, .paso { border: 1px solid #999; box-shadow: none; break-inside: avoid; }
-  .ficha__encabezado { background: #fff !important; color: #000 !important; border-bottom: 1px solid #999; }
-  .ficha__sello { color: #000 !important; }
-  .footer { background: #fff; color: #000; }
-  .footer .logo__nombre { color: #000; }
-  html.js .revelar { opacity: 1 !important; transform: none !important; }
-  .acordeon details { break-inside: avoid; }
-  /* Muestra la URL real de los enlaces al imprimir */
-  .acordeon__cuerpo a::after, .dato__valor a::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+  .header, .topbar, .wa-flotante, .hero__acciones, .hero__nota, .servicio__accion, .mapa, .contacto-final, .menu, .saltar-contenido { display: none; }
+  body { color: var(--gris-900); background: var(--blanco); font-size: 11pt; }
+  .seccion, #compromiso { padding-block: 24px; background: var(--blanco); color: var(--gris-900); }
+  .hero { padding: 20px 0; }
+  .hero__grid, .seccion__cabecera, #normatividad > .contenedor, .preguntas__grid, .ubicacion__grid { display: block; }
+  .hero__visual { display: none; }
+  .hero__titulo { font-size: 36pt; }
+  .seccion__titulo { font-size: 24pt; }
+  .servicio, .paso, .dato { break-inside: avoid; }
+  .preguntas__intro { position: static; }
+  html.reveal-ready .revelar { opacity: 1; transform: none; }
+  .cita__texto, .cita__texto strong, .cita__pie { color: var(--gris-900); }
+  .footer { background: var(--blanco); color: var(--gris-900); }
+  .footer__lista a, .footer__titulo, .footer__legal, .footer .logo__nombre, .footer .logo__bajada { color: var(--gris-900); }
 }

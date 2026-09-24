@@ -38,11 +38,12 @@ Verificentro-PAC/
 │  │  └─ styles.css            ← estilos de cada componente
 │  ├─ fonts/                   ← Barlow, 4 pesos, servidos desde aquí
 │  ├─ js/
-│  │  └─ main.js               ← carga del mapa + aparición al hacer scroll
+│  │  └─ main.js               ← mapa, menú, navegación activa y apariciones
 │  └─ img/
 │     ├─ logo-pac.png          ← logo oficial, ya sin fondo y recortado
 │     ├─ logo-pac-original.png ← el archivo tal cual lo mandó el cliente. No lo borres.
 │     ├─ isotipo-pac.svg       ← la hoja del logo, vectorizada del PNG oficial
+│     ├─ tractocamion-tecnico.svg ← ilustración vectorial original de portada
 │     ├─ favicon.svg           ← ícono de pestaña
 │     ├─ favicon-32.png
 │     ├─ apple-touch-icon.png  ← 180 px, para iPhone
@@ -52,9 +53,13 @@ Verificentro-PAC/
 └─ .claude/launch.json         ← config del servidor local (no afecta al sitio)
 ```
 
-Secciones de la página, en orden: barra de ubicación · header · hero con ficha
-de datos · servicios · cómo funciona · compromiso · normatividad · preguntas
-frecuentes · ubicación con mapa · footer.
+Secciones de la página, en orden: barra de ubicación · header · portada con
+ilustración técnica · datos rápidos · servicios · cómo funciona · compromiso ·
+normatividad · preguntas frecuentes · ubicación con mapa · contacto · footer.
+
+El diseño combina el verde de la marca, fondos claros y carbón. La ilustración
+es un recurso gráfico, no una fotografía del negocio. Las fotos reales pueden
+incorporarse después sin alterar los datos de contacto ni la estructura.
 
 ### Si vas a tocar algo, lee esto primero
 
@@ -62,13 +67,13 @@ frecuentes · ubicación con mapa · footer.
   ("Roles semánticos"). No cambies colores directamente en `styles.css`.
 - **Para cambiar textos** → `index.html`. Cada sección está separada con un
   comentario grande en mayúsculas.
-- **Para cambiar el número de WhatsApp** → busca `524491100153` en `index.html`.
-  Aparece en 7 lugares.
-- **Para llenar un pendiente** → busca en la página lo que salga con recuadro
-  ámbar punteado, o busca `class="pendiente"` en `index.html`. Borra la etiqueta
-  `<span class="pendiente">…</span>` y escribe el dato real.
-- **Si cambia el domicilio** → hay que actualizar dos lugares: el JSON-LD al final
-  de `index.html` y las coordenadas en `assets/js/main.js`.
+- **Para cambiar el número de WhatsApp** → busca todas las coincidencias de
+  `524491100153` en los archivos HTML. Cada consulta tiene un mensaje propio.
+- **Para llenar un pendiente** → consulta la lista al final de este documento y
+  los comentarios `PENDIENTE` del HTML. Los datos aún desconocidos se consultan
+  por WhatsApp; no se muestran avisos internos al visitante.
+- **Si cambia el domicilio** → actualiza el texto visible, el JSON-LD, los enlaces
+  de Google Maps y Waze, y las coordenadas del mapa en `assets/js/main.js`.
 - **Si cambia el teléfono** → aparece en `index.html`, en `404.html` y en
   `og-plantilla.html` (y hay que regenerar `og-pac.png`, ver más abajo).
 - **`404.html` usa rutas que empiezan con `/`** y por eso se ve sin estilos si le
@@ -82,10 +87,14 @@ mete cookies de terceros. Se muestra un panel propio y el mapa real aparece al
 primer clic. Los botones de Google Maps y Waze son enlaces normales, así que
 funcionan aunque el JavaScript falle.
 
-**La red de seguridad de `main.js`.** El efecto de aparición esconde el contenido
-hasta que el navegador avisa que ya se ve en pantalla. Si ese aviso no llega, un
-temporizador muestra todo a los 1.5 segundos. Sin eso, un fallo del navegador
-dejaría la página en blanco. No borres ese `setTimeout`.
+**El contenido es visible por defecto.** Solo se activa la clase `reveal-ready`
+después de inicializar el observador. Un temporizador muestra todo a los 1.5
+segundos si el observador falla. Si JavaScript no carga, la página sigue siendo
+legible; el menú y los acordeones funcionan con HTML nativo. Se respeta la
+preferencia de movimiento reducido.
+
+Los CSS y el JavaScript llevan un parámetro `?v=` en `index.html` y `404.html`.
+Actualízalo al publicar cambios para evitar que se reutilicen estilos antiguos.
 
 ---
 
@@ -97,8 +106,9 @@ Medida sobre el logo oficial, no puesta a ojo. El detalle importante:
 |---|---|---|
 | `--verde-300` | `#A7C776` | El verde del logo. **Solo hoja, íconos y rellenos.** |
 | `--verde-700` | `#46681A` | **Botones y texto verde.** Es el único que pasa contraste AA (6.5:1). |
-| `--gris-800` | `#3A3936` | Texto principal |
+| `--color-texto` | `#26342B` | Texto principal |
 | `--gris-600` | `#63625D` | Texto secundario |
+| `--color-fondo-oscuro` | `#202C25` | Lámina técnica, compromiso y footer |
 | `--pac-gris-logo` | `#7D7E79` | El gris exacto del wordmark. Solo para dibujar el logo. |
 
 El verde del logo es demasiado claro para llevar texto blanco encima (da 1.9:1,
@@ -134,14 +144,14 @@ que la vuelvan a leer, porque guardan copia: <https://developers.facebook.com/to
 
 ### Bloqueantes para publicar
 - [x] **Horario de atención** — confirmado: lunes a sábado, 9:00 a 18:00 h.
-      Ya está en `index.html` (topbar, ficha, contacto, footer y JSON-LD
+      Ya está en `index.html` (topbar, datos rápidos, contacto, footer y JSON-LD
       `openingHours`) y en `404.html`.
 - [ ] **Dominio.** Buscar `EJEMPLO.mx` en `index.html` y reemplazar (5 lugares:
       canonical, Open Graph y JSON-LD). También en `robots.txt` y `sitemap.xml`.
 - [ ] **¿Quién contesta el WhatsApp?** Cada botón del sitio manda a ese número.
       Si nadie contesta, el sitio falla en silencio. Confirmarlo antes de publicar.
 - [ ] **Que el cliente apruebe el texto por escrito**, sobre todo el sello de
-      "Acreditada" y la lista de normas. Son afirmaciones regulatorias.
+      las acreditaciones y la lista de normas. Son afirmaciones regulatorias.
 - [x] **Logo oficial** del cliente — ya está, procesado y sin fondo.
 - [x] **Imagen Open Graph** `assets/img/og-pac.png`, 1200×630 px.
 - [x] **Juego de íconos** (favicon, iPhone, Android).
